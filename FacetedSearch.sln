@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Web", "src\FacetedSearch.Web\FacetedSearch.Web.csproj", "{A131651C-4810-44BE-83D8-1FA7370FAD61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch", "src\FacetedSearch\FacetedSearch.csproj", "{FE4A6497-5E60-4841-BE93-6E138711D3A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Tests", "src\FacetedSearch.Tests\FacetedSearch.Tests.csproj", "{36C0867A-23B9-4DD3-B002-915BC7703AE4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A131651C-4810-44BE-83D8-1FA7370FAD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A131651C-4810-44BE-83D8-1FA7370FAD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A131651C-4810-44BE-83D8-1FA7370FAD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A131651C-4810-44BE-83D8-1FA7370FAD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE4A6497-5E60-4841-BE93-6E138711D3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE4A6497-5E60-4841-BE93-6E138711D3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE4A6497-5E60-4841-BE93-6E138711D3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE4A6497-5E60-4841-BE93-6E138711D3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

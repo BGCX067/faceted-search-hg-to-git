@@ -1,0 +1,26 @@
+# Mercurial .hgignore file template by pocheptsov.com idea via Abdullin.com
+# For syntax see: http://linux.die.net/man/5/hgignore
+# Snippet http://gist.github.com/446133
+
+# Visual Studio
+syntax: glob
+*.suo
+*.user
+*.cache
+
+# Direcories
+syntax: re
+obj/
+bin/
+deploy/
+App_Data/
+.git/
+
+# Misc
+syntax: glob
+Thumbs.db
+*.bak
+*.log
+/pass.txt
+src/apps/Mascot.SmartStore/config/*
+errorlog.txt
