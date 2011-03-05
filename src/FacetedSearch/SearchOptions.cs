@@ -5,6 +5,21 @@ namespace FacetedSearch
 {
     public class SearchOptions : ISearchOptions
     {
-        private IList<ISearchOptionsParam> _params = new List<ISearchOptionsParam>();
+        private readonly IJsonSerializer _jsonSerializer;
+        private readonly IList<ISearchOptionsParam> _params = new List<ISearchOptionsParam>();
+
+        public SearchOptions(IJsonSerializer jsonSerializer)
+        {
+            _jsonSerializer = jsonSerializer;
+        }
+
+        public string GetJson()
+        {
+            var paramsPart = _jsonSerializer.Serialize(_params);
+
+            //add extra options to json, think about versioning
+
+            return paramsPart;
+        }
     }
 }
