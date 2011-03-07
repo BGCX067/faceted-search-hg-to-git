@@ -7,6 +7,10 @@ namespace FacetedSearch.Params
     {
         private string _name;
 
+        protected BaseSearchOptionsParam()
+        {
+        }
+
         protected BaseSearchOptionsParam(string name)
         {
             _name = name;

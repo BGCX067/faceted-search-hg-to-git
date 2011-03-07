@@ -4,7 +4,8 @@ namespace FacetedSearch.SD
 {
     public class SearchOptionsSD : ISD
     {
-        public IList<ISD> Items { get; set; }
+        //List type was used to be compatible with deserialization process of DataContractSerializer
+        public List<ISD> Items { get; set; }
 
         public string HtmlData { get; set; }
 

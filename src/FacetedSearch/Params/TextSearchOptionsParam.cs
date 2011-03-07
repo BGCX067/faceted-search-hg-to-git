@@ -4,6 +4,10 @@ namespace FacetedSearch.Params
 {
     public class TextSearchOptionsParam : BaseSearchOptionsParam, ISD
     {
+        public TextSearchOptionsParam()
+        {
+        }
+
         public TextSearchOptionsParam(string searchOptionsName) : base(searchOptionsName)
         {
         }
