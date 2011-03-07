@@ -11,7 +11,7 @@ namespace FacetedSearch.Tests
 
         private Establish context = () =>
                                         {
-                                            _jsonSerializer = new JsonSerializer();
+                                            _jsonSerializer = new DefaultJsonSerializer();
                                             _searchOptions = new SearchOptions(_jsonSerializer);
                                         };
 

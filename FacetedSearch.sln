@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch", "src\Facete
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Tests", "src\FacetedSearch.Tests\FacetedSearch.Tests.csproj", "{36C0867A-23B9-4DD3-B002-915BC7703AE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Extensions", "FacetedSearch.Extensions\FacetedSearch.Extensions.csproj", "{79A39FFE-6929-427F-B12A-6CD8EEC11034}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36C0867A-23B9-4DD3-B002-915BC7703AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A39FFE-6929-427F-B12A-6CD8EEC11034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A39FFE-6929-427F-B12A-6CD8EEC11034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A39FFE-6929-427F-B12A-6CD8EEC11034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A39FFE-6929-427F-B12A-6CD8EEC11034}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

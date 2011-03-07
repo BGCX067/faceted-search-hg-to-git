@@ -72,6 +72,7 @@
       <Abbreviation Text="ATP" />
       <Abbreviation Text="MV" />
       <Abbreviation Text="SAP" />
+      <Abbreviation Text="SD" />
     </Naming2>
   </CodeStyleSettings>
   <CodeAnnotations>
@@ -79,4 +80,45 @@
     <Namespace>Machine.Specifications.Annotations</Namespace>
     <DefaultNamespace>JetBrains.Annotations</DefaultNamespace>
   </CodeAnnotations>
+  <SharedSolutionTemplateManager>
+    <LiveTemplates>
+      <Template uid="b44f4369-d971-420c-b527-a22b562c279b" shortcut="mspec" description="MSpec template" text="[Subject(&quot;$subject$&quot;)]&#xD;&#xA;public class when_$when$&#xD;&#xA;{&#xD;&#xA;	Establish context =()=&gt;	{};&#xD;&#xA;&#xD;&#xA;	Because of =()=&gt; {};		&#xD;&#xA;	&#xD;&#xA;	It should_$should$ =()=&gt; $END$;&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Categories />
+        <Variables>
+          <Variable name="subject" expression="" initialRange="0" />
+          <Variable name="when" expression="" initialRange="0" />
+          <Variable name="should" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="42308ba9-b816-49d7-b82c-748aad1bd035" shortcut="massert" description="MSpec assert" text="It should_$should$ =()=&gt; $END$;" reformat="True" shortenQualifiedReferences="True">
+        <Categories />
+        <Variables>
+          <Variable name="should" expression="" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="24e9f54e-eea1-46b7-a83c-818b56dc467f" shortcut="met" description="Generic method template" text="public $void$ $Name$&lt;$T$&gt;($string$ $name$)&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Categories />
+        <Variables>
+          <Variable name="void" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="Name" expression="" initialRange="0" />
+          <Variable name="string" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="T" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="name" expression="suggestVariableName()" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+      <Template uid="16e8dd0a-25aa-4a58-8c1d-8600f2831973" shortcut="me" description="Method template" text="public $void$ $Name$($string$ $name$)&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+        <Categories />
+        <Variables>
+          <Variable name="void" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="Name" expression="" initialRange="0" />
+          <Variable name="string" expression="guessExpectedType()" initialRange="0" />
+          <Variable name="name" expression="guessExpectedType()" initialRange="0" />
+        </Variables>
+        <CustomProperties />
+      </Template>
+    </LiveTemplates>
+  </SharedSolutionTemplateManager>
 </Configuration>

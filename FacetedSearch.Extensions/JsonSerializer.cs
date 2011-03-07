@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using FacetedSearch.Params;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace FacetedSearch
+namespace FacetedSearch.Extensions
 {
     public class JsonSerializer : IJsonSerializer
     {
+        #region IJsonSerializer Members
+
         public string Serialize(object obj)
         {
             return JsonConvert.SerializeObject(obj);
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace FacetedSearch.Builder
 {
-    public interface ISearchOptionsBuilder
+    public interface IFluentSearchOptions
     {
     }
 }
