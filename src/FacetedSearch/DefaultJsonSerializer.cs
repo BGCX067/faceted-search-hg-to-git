@@ -17,7 +17,7 @@ namespace FacetedSearch
             {
                 jsonSerializer.WriteObject(memoryStream, obj);
 
-                json = Encoding.Default.GetString(memoryStream.ToArray());
+                json = Encoding.UTF8.GetString(memoryStream.ToArray());
             }
             return json;
         }
