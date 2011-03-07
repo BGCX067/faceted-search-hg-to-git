@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using FacetedSearch.Params;
+using Newtonsoft.Json;
 
 namespace FacetedSearch
 {
     public class JsonSerializer : IJsonSerializer
     {
-        public string Serialize(IList<ISearchOptionsParam> searchOptionsParams)
+        public string Serialize(object obj)
         {
-            throw new NotImplementedException();
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }

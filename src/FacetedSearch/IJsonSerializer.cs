@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using FacetedSearch.Params;
-
-namespace FacetedSearch
+﻿namespace FacetedSearch
 {
     public interface IJsonSerializer
     {
-        string Serialize(IList<ISearchOptionsParam> searchOptionsParams);
+        string Serialize(object obj);
     }
 }

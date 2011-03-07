@@ -12,17 +12,17 @@ namespace FacetedSearch.Tests
         private Establish context = () =>
                                         {
                                             _jsonSerializer = new JsonSerializer();
-                                            _searchParams = new List<ISearchOptionsParam>();
+                                            _searchOptions = new SearchOptions(_jsonSerializer);
                                         };
 
-        private Because of = () => { _jsonString = _jsonSerializer.Serialize(_searchParams); };
+        private Because of = () => { _jsonString = _jsonSerializer.Serialize(_searchOptions); };
     }
 
     public abstract class JsonSerializerSpecs
     {
         protected static IJsonSerializer _jsonSerializer;
         protected static string _jsonString;
-        protected static IList<ISearchOptionsParam> _searchParams;
+        protected static ISearchOptions _searchOptions;
     }
 
     [Behaviors]
