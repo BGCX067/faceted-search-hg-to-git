@@ -2,7 +2,7 @@
 
 namespace FacetedSearch.Builder
 {
-    public class TextSearchOptionsParamBuilder : BaseSearchOptionsParamBuilder<TextSearchOptionsParam>
+    public class TextSearchOptionsParamBuilder : BaseSearchOptionsParamBuilder<TextSearchOptionsParam, TextSearchOptionsParamBuilder>
     {
         public TextSearchOptionsParamBuilder(TextSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder)
             : base(param, searchOptionsBuilder)
@@ -13,6 +13,12 @@ namespace FacetedSearch.Builder
         public TextSearchOptionsParamBuilder Disabled(bool isDisabled = true)
         {
             _param.IsDisabled = isDisabled;
+            return this;
+        }
+        
+        public TextSearchOptionsParamBuilder Watermark(string watermark)
+        {
+            _param.Watermark = watermark;
             return this;
         }
     }

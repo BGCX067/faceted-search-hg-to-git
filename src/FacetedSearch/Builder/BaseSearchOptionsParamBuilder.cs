@@ -2,7 +2,9 @@
 
 namespace FacetedSearch.Builder
 {
-    public abstract class BaseSearchOptionsParamBuilder<T> where T : BaseSearchOptionsParam
+    public abstract class BaseSearchOptionsParamBuilder<T, TBuilder>
+        where T : BaseSearchOptionsParam
+        where TBuilder : BaseSearchOptionsParamBuilder<T, TBuilder>
     {
         protected readonly SearchOptionsBuilder _searchOptionsBuilder;
         protected T _param;
@@ -16,6 +18,12 @@ namespace FacetedSearch.Builder
         public SearchOptionsBuilder End()
         {
             return _searchOptionsBuilder;
+        }
+
+        public TBuilder Description(string description)
+        {
+            _param.Description = description;
+            return (TBuilder) this;
         }
     }
 }

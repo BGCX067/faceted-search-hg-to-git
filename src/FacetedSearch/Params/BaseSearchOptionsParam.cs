@@ -6,6 +6,7 @@ namespace FacetedSearch.Params
     public abstract class BaseSearchOptionsParam : ISearchOptionsParam
     {
         private string _name;
+        private int _order = -1;
 
         protected BaseSearchOptionsParam()
         {
@@ -24,7 +25,8 @@ namespace FacetedSearch.Params
             set { _name = value; }
         }
 
-        private int _order = -1;
+        public string Description { get; set; }
+
         public int Order
         {
             get { return _order; }

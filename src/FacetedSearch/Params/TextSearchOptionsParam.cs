@@ -14,6 +14,8 @@ namespace FacetedSearch.Params
 
         public string Text { get; set; }
 
+        public string Watermark { get; set; }
+
         public bool IsDisabled { get; set; }
     }
 }

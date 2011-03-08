@@ -1,4 +1,6 @@
-﻿using FacetedSearch.Params;
+﻿using System;
+using FacetedSearch.Params;
+using Lokad;
 
 namespace FacetedSearch.Builder
 {
@@ -12,11 +14,19 @@ namespace FacetedSearch.Builder
             _searchOptions = new SearchOptions(jsonSerializer);
         }
 
-        public TextSearchOptionsParamBuilder Text(string searchOptionsName)
+        public TextSearchOptionsParamBuilder Text(string searchOptionsName = "")
         {
             var textSearchOptionsParam = new TextSearchOptionsParam(searchOptionsName);
             _searchOptions.AddParam(textSearchOptionsParam);
             return new TextSearchOptionsParamBuilder(textSearchOptionsParam, this);
+        }
+
+        public SearchOptionsBuilder Text(Action<TextSearchOptionsParamBuilder> action)
+        {
+            Enforce.Argument(() => action);
+
+            action(Text());
+            return this;
         }
 
         public SearchOptions BuildSearchOptions()
