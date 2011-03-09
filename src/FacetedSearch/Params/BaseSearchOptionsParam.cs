@@ -29,6 +29,8 @@ namespace FacetedSearch.Params
 
         public string Description { get; set; }
 
+        public string Help { get; set; }
+
         public int Order
         {
             get { return _order; }

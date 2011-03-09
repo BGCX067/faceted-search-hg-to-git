@@ -31,5 +31,11 @@ namespace FacetedSearch.Builder
             _param.Order = orderIndex;
             return (TBuilder) this;
         }
+        
+        public TBuilder Help(string help)
+        {
+            _param.Help = help;
+            return (TBuilder) this;
+        }
     }
 }

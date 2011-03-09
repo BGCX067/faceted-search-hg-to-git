@@ -8,6 +8,7 @@ namespace FacetedSearch.Params
     {
         string Name { get; set; }
         string Description { get; set; }
+        string Help { get; set; }
 
         int Order { get; set; }
         event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
