@@ -1,11 +1,13 @@
-﻿namespace FacetedSearch.Common
+﻿using FacetedSearch.Params;
+
+namespace FacetedSearch.Common
 {
     public interface IVisitor
     {
-        void Visit(object element);
+        void Visit<T>(T element) where T : class, ISearchOptionsParam;
     }
 
-    public interface IVisitor<in T> : IVisitor
+    public interface IVisitor<in T> : IVisitor where T : class
     {
         void Visit(T element);
     }

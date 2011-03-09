@@ -87,11 +87,8 @@
     <Compile Include="Params\BaseSearchOptionsParam.cs" />
     <Compile Include="Common\SearchOptionsParamOrderArgs.cs" />
     <Compile Include="Params\CheckboxSearchOptionsParam.cs" />
-    <Compile Include="QueryBuilder\BaseQueryVisitor.cs" />
-    <Compile Include="QueryBuilder\TextQueryVisitor.cs" />
-    <Compile Include="QueryBuilder\ISpecification.cs" />
-    <Compile Include="QueryBuilder\ITextSpecification.cs" />
-    <Compile Include="QueryBuilder\TextSpecification.cs" />
+    <Compile Include="QueryBuilder\EventDrivenQueryVisitor.cs" />
+    <Compile Include="Common\ElementVisitedHandler.cs" />
     <Compile Include="SD\ISD.cs" />
     <Compile Include="Params\ISearchOptionsParam.cs" />
     <Compile Include="ISearchOptions.cs" />
