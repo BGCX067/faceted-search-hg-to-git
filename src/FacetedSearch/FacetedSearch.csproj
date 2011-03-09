@@ -79,6 +79,7 @@
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="DefaultJsonSerializer.cs" />
     <Compile Include="Params\BaseSearchOptionsParam.cs" />
+    <Compile Include="Common\SearchOptionsParamOrderArgs.cs" />
     <Compile Include="SD\ISD.cs" />
     <Compile Include="Params\ISearchOptionsParam.cs" />
     <Compile Include="ISearchOptions.cs" />

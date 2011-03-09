@@ -1,4 +1,6 @@
-﻿using FacetedSearch.SD;
+﻿using System;
+using FacetedSearch.Common;
+using FacetedSearch.SD;
 using Lokad;
 
 namespace FacetedSearch.Params
@@ -30,7 +32,25 @@ namespace FacetedSearch.Params
         public int Order
         {
             get { return _order; }
-            set { _order = value; }
+            set
+            {
+                if (_order != value)
+                {
+                    InvokeOrderChanged(new SearchOptionsParamOrderArgs { OldOrder = _order, NewOrder = value});
+                }
+                _order = value;
+            }
+        }
+
+        public event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
+
+        protected void InvokeOrderChanged(SearchOptionsParamOrderArgs e)
+        {
+            EventHandler<SearchOptionsParamOrderArgs> handler = OrderChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
 
         public virtual ISD GetSD()

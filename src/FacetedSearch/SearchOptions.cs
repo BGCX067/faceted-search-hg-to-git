@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using FacetedSearch.Common;
 using FacetedSearch.Params;
 using FacetedSearch.SD;
 
@@ -64,8 +66,20 @@ namespace FacetedSearch
                 key = param.Order < 0 ? keys.Max() + 1 : param.Order;
             }
             param.Order = key;
+            param.OrderChanged += OnParamOrderChanged;
             _params.Add(key, param);
             return param;
+        }
+
+        private void OnParamOrderChanged(object sender, SearchOptionsParamOrderArgs e)
+        {
+            var oldOrder = e.OldOrder;
+            if (_params.ContainsKey(oldOrder))
+            {
+                var param = _params[oldOrder];
+                _params.Remove(oldOrder);
+                _params.Add(e.NewOrder, param);
+            }
         }
     }
 }

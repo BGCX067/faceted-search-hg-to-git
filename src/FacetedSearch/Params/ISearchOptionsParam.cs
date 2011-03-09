@@ -1,4 +1,6 @@
-﻿using FacetedSearch.SD;
+﻿using System;
+using FacetedSearch.Common;
+using FacetedSearch.SD;
 
 namespace FacetedSearch.Params
 {
@@ -8,6 +10,7 @@ namespace FacetedSearch.Params
         string Description { get; set; }
 
         int Order { get; set; }
+        event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
         ISD GetSD();
     }
 }
