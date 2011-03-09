@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using FacetedSearch.Common;
@@ -8,7 +7,7 @@ using FacetedSearch.SD;
 
 namespace FacetedSearch
 {
-    public class SearchOptions : ISearchOptions
+    public class SearchOptions : ISearchOptions, IVisitorElement
     {
         private readonly IJsonSerializer _jsonSerializer;
         private readonly IDictionary<int, ISearchOptionsParam> _params = new SortedList<int, ISearchOptionsParam>();
@@ -38,6 +37,15 @@ namespace FacetedSearch
             //add extra options to json, think about versioning
 
             return paramsPart;
+        }
+
+        #endregion
+
+        #region IVisitorElement Members
+
+        public void Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
         }
 
         #endregion

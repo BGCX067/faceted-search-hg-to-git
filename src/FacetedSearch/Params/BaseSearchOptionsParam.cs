@@ -5,7 +5,7 @@ using Lokad;
 
 namespace FacetedSearch.Params
 {
-    public abstract class BaseSearchOptionsParam : ISearchOptionsParam
+    public abstract class BaseSearchOptionsParam : ISearchOptionsParam, IVisitorElement
     {
         private string _name;
         private int _order = -1;
@@ -38,22 +38,13 @@ namespace FacetedSearch.Params
             {
                 if (_order != value)
                 {
-                    InvokeOrderChanged(new SearchOptionsParamOrderArgs { OldOrder = _order, NewOrder = value});
+                    InvokeOrderChanged(new SearchOptionsParamOrderArgs {OldOrder = _order, NewOrder = value});
                 }
                 _order = value;
             }
         }
 
         public event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
-
-        protected void InvokeOrderChanged(SearchOptionsParamOrderArgs e)
-        {
-            EventHandler<SearchOptionsParamOrderArgs> handler = OrderChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
 
         public virtual ISD GetSD()
         {
@@ -64,5 +55,23 @@ namespace FacetedSearch.Params
         }
 
         #endregion
+
+        #region IVisitorElement Members
+
+        void IVisitorElement.Accept(IVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+
+        #endregion
+
+        protected void InvokeOrderChanged(SearchOptionsParamOrderArgs e)
+        {
+            EventHandler<SearchOptionsParamOrderArgs> handler = OrderChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }

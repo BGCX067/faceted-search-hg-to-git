@@ -34,6 +34,9 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.2.2.4.900\lib\NET40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="LinqSpecs">
+      <HintPath>..\..\packages\LinqSpecs.1.0.1\LinqSpecs.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
@@ -77,11 +80,18 @@
     <Compile Include="Builder\IFluentSearchOptions.cs" />
     <Compile Include="Builder\SearchOptionsBuilder.cs" />
     <Compile Include="Builder\TextSearchOptionsParamBuilder.cs" />
+    <Compile Include="Common\IVisitor.cs" />
+    <Compile Include="Common\IVisitorElement.cs" />
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="DefaultJsonSerializer.cs" />
     <Compile Include="Params\BaseSearchOptionsParam.cs" />
     <Compile Include="Common\SearchOptionsParamOrderArgs.cs" />
     <Compile Include="Params\CheckboxSearchOptionsParam.cs" />
+    <Compile Include="QueryBuilder\BaseQueryVisitor.cs" />
+    <Compile Include="QueryBuilder\TextQueryVisitor.cs" />
+    <Compile Include="QueryBuilder\ISpecification.cs" />
+    <Compile Include="QueryBuilder\ITextSpecification.cs" />
+    <Compile Include="QueryBuilder\TextSpecification.cs" />
     <Compile Include="SD\ISD.cs" />
     <Compile Include="Params\ISearchOptionsParam.cs" />
     <Compile Include="ISearchOptions.cs" />
