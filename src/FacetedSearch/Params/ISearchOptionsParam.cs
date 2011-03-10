@@ -11,6 +11,7 @@ namespace FacetedSearch.Params
         string Help { get; set; }
 
         int Order { get; set; }
+        SearchOptionsParamType ParamType { get; }
         event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
         ISD GetSD();
     }

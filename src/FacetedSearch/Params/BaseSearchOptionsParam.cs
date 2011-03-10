@@ -44,6 +44,8 @@ namespace FacetedSearch.Params
             }
         }
 
+        public abstract SearchOptionsParamType ParamType { get; }
+
         public event EventHandler<SearchOptionsParamOrderArgs> OrderChanged;
 
         public virtual ISD GetSD()

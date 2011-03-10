@@ -17,5 +17,10 @@ namespace FacetedSearch.Params
         public bool IsDisabled { get; set; }
 
         public bool IsChecked { get; set; }
+
+        public override SearchOptionsParamType ParamType
+        {
+            get { return SearchOptionsParamType.Checkbox; }
+        }
     }
 }

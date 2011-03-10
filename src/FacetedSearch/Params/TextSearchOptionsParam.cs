@@ -17,5 +17,11 @@ namespace FacetedSearch.Params
         public string Watermark { get; set; }
 
         public bool IsDisabled { get; set; }
+
+        public override SearchOptionsParamType ParamType
+        {
+            get { return SearchOptionsParamType.Text; }
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using FacetedSearch.Params;
 using Machine.Specifications;
 

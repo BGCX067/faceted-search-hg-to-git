@@ -9,6 +9,6 @@ namespace FacetedSearch.Common
 
     public interface IVisitor<in T> : IVisitor where T : class
     {
-        void Visit(T element);
+        object Visit(T element);
     }
 }
