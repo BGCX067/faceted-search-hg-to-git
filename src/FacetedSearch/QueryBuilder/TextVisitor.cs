@@ -11,10 +11,10 @@ namespace FacetedSearch.QueryBuilder
             throw new NotImplementedException();
         }
 
-        public void Visit<T>(T element) where T : class, ISearchOptionsParam
+        public object Visit<T>(T element) where T : class, ISearchOptionsParam
         {
             var el = element as TextSearchOptionsParam;
-            Visit(el);
+            return Visit(el);
         }
     }
 }

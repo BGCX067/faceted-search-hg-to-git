@@ -1,13 +1,24 @@
 ﻿using System;
-using System.Linq.Expressions;
 using FacetedSearch.Common;
 using FacetedSearch.Params;
-using LinqSpecs;
 
 namespace FacetedSearch.QueryBuilder
 {
     public class EventDrivenQueryVisitor : IVisitor
     {
+        #region IVisitor Members
+
+        public object Visit<T>(T element) where T : class, ISearchOptionsParam
+        {
+            InvokeElementVisited(new ElementVisitedHandler
+                                     {
+                                         Element = element,
+                                     });
+            return this;
+        }
+
+        #endregion
+
         public event EventHandler<ElementVisitedHandler> ElementVisited;
 
         public void InvokeElementVisited(ElementVisitedHandler e)
@@ -18,17 +29,5 @@ namespace FacetedSearch.QueryBuilder
                 handler(this, e);
             }
         }
-
-        #region IVisitor<T> Members
-
-        public void Visit<T>(T element) where T : class, ISearchOptionsParam
-        {
-            InvokeElementVisited(new ElementVisitedHandler
-                                     {
-                                         Element = element,
-                                     });
-        }
-
-        #endregion
     }
 }

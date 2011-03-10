@@ -57,9 +57,9 @@ namespace FacetedSearch.QueryBuilder
 
         #region IVisitor Members
 
-        public void Visit<T>(T element) where T : class, ISearchOptionsParam
+        public object Visit<T>(T element) where T : class, ISearchOptionsParam
         {
-            BuildPart(element);
+            return BuildPart(element);
         }
 
         #endregion
