@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using FacetedSearch.Common;
 using FacetedSearch.Params;
 using Lokad;
@@ -13,12 +15,18 @@ namespace FacetedSearch.QueryBuilder
         private readonly Func<ISearchOptionsParam, Pair<bool, object>> _visitorMapper =
             _ => new Pair<bool, object>(false, null);
 
-        private static readonly Dictionary<SearchOptionsParamType, IVisitor> InternalMap;
+        protected static readonly IDictionary<SearchOptionsParamType, IVisitor> InternalMap = new Dictionary<SearchOptionsParamType, IVisitor>();
 
         static DictionaryQueryVisitor()
         {
-            InternalMap = new Dictionary<SearchOptionsParamType, IVisitor> {{SearchOptionsParamType.Text, new TextVisitor()}};
-            InternalMap = new Dictionary<SearchOptionsParamType, IVisitor> { { SearchOptionsParamType.Checkbox, new CheckboxVisitor() } };
+            //automatically register all intermal supported types
+            Assembly.GetAssembly(typeof (IParamVisitor<>)).GetExportedTypes().Where(
+                _ => _.GetInterfaces().Any(x => x == typeof(IParamVisitor<>))).ForEach(delegate(Type type)
+                                                                                        {
+                                                                                            var visitor = (IParamVisitorType)Activator.CreateInstance(type);
+                                                                                            InternalMap.Add(visitor.Type, (IVisitor) visitor);
+                                                                                        });
+
         }
 
         public DictionaryQueryVisitor()
