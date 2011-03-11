@@ -50,7 +50,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\FacetedSearch\FacetedSearch.csproj">
+    <ProjectReference Include="..\FacetedSearch\FacetedSearch.csproj">
       <Project>{FE4A6497-5E60-4841-BE93-6E138711D3A0}</Project>
       <Name>FacetedSearch</Name>
     </ProjectReference>

@@ -63,6 +63,9 @@
     <Compile Include="..\VersionAssemblyInfo.cs">
       <Link>Properties\VersionAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Builder\BaseSearchOptionsParamBuilderSpec.cs" />
+    <Compile Include="Builder\TestSearchOptionsParamBuilder.cs" />
+    <Compile Include="Params\TestSearchOptionsParam.cs" />
     <Compile Include="JsonSerializerSpec.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

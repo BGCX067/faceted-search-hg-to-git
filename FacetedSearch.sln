@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch", "src\Facete
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Tests", "src\FacetedSearch.Tests\FacetedSearch.Tests.csproj", "{36C0867A-23B9-4DD3-B002-915BC7703AE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Extensions", "FacetedSearch.Extensions\FacetedSearch.Extensions.csproj", "{79A39FFE-6929-427F-B12A-6CD8EEC11034}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacetedSearch.Extensions", "src\FacetedSearch.Extensions\FacetedSearch.Extensions.csproj", "{79A39FFE-6929-427F-B12A-6CD8EEC11034}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
