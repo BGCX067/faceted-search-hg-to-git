@@ -14,18 +14,20 @@
         static Simulator()
         {
             FacatedSearch.Map<User>()
-                .Set(_ => _.Male)
-                .Set(_ => _.Age, PropertyMappingType.RangeValue);
+                .Property(_ => _.Male)
+                .Property(_ => _.Age, PropertyMappingType.RangeValue)
+                .Reference(_ => _.Country.CountryCode.Code)
+                .Reference(_ => _.Country.Id);
         }
 
         public Simulator()
         {
-            AddUser("User1", 20, true);
-            AddUser("User2", 30, false);
-            AddUser("User3", 40, true);
-            AddUser("User4", 20, false);
-            AddUser("User5", 30, true);
-            AddUser("User6", 40, false);
+            AddUser("User1", 20, true, "Ukraine");
+            AddUser("User2", 30, false, "Ukraine");
+            AddUser("User3", 40, true, "Ukraine");
+            AddUser("User4", 20, false, "Ukraine");
+            AddUser("User5", 30, true, "Ukraine");
+            AddUser("User6", 40, false, "Ukraine");
             AddUser("User7", 20, true);
             AddUser("User8", 30, false);
             AddUser("User9", 40, true);
@@ -34,12 +36,15 @@
             AddUser("User12", 40, false);
         }
 
-        private void AddUser(string userName, int age, bool male)
+        private void AddUser(string userName, int age, bool male, string coutry = "USA")
         {
             var user = new User();
             user.Age = age;
             user.Male = male;
             user.Name = userName;
+            user.Country = coutry == "USA"
+                                 ? new Country { Id = 1, Name = "USA" }
+                                 : new Country { Id = 2, Name = "Ukraine" };
 
             _users.Add(user);
         }
@@ -67,6 +72,7 @@
                 sb.AppendFormat("User name: {0}\n", sortedUser.Name);
                 sb.AppendFormat("Age: {0}\n", sortedUser.Age);
                 sb.AppendFormat("Male: {0}\n", sortedUser.Male);
+                sb.AppendFormat("Country: {0}\n", sortedUser.Country.Name);
             }
 
             Console.WriteLine(sb);
