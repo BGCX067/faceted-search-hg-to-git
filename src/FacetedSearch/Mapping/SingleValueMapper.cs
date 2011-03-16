@@ -7,7 +7,7 @@ namespace FacetedSearch.Mapping
     {
         public override BinaryExpression GetCompareExpression(MemberExpression propertyExpression, object userSelection)
         {
-            ConstantExpression constantExpression = Expression.Constant(userSelection.ToString());
+            ConstantExpression constantExpression = Expression.Constant(userSelection);
             if (propertyExpression.Type == typeof (bool))
             {
                 constantExpression = Expression.Constant(Convert.ToBoolean(userSelection));
