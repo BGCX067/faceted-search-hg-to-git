@@ -43,9 +43,6 @@
     <Reference Include="Lokad.Logging">
       <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Lokad.Quality">
-      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Quality.dll</HintPath>
-    </Reference>
     <Reference Include="Lokad.Shared">
       <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Shared.dll</HintPath>
     </Reference>
@@ -84,6 +81,7 @@
     <Compile Include="Common\IVisitor.cs" />
     <Compile Include="Common\IVisitorElement.cs" />
     <Compile Include="Common\Visitor.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="FacetedSearch.cs" />
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="DefaultJsonSerializer.cs" />
@@ -112,6 +110,7 @@
     <Compile Include="QueryBuilder\QueryBuilder.cs" />
     <Compile Include="SD\SearchOptionsSD.cs" />
     <Compile Include="SearchOptions.cs" />
+    <Compile Include="SerializationTypesAttribute.cs" />
     <Compile Include="Web\FacetedSearchHtmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>

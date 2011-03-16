@@ -1,16 +1,34 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using FacetedSearch.Extensions;
+using FacetedSearch.SD;
 
 namespace FacetedSearch
 {
     public class DefaultJsonSerializer : IJsonSerializer
     {
+        private static readonly IEnumerable<Type> KnowTypes;
+
+        static DefaultJsonSerializer()
+        {
+            KnowTypes =
+                AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(_ => _.IsDefined(typeof (SerializationTypesAttribute), false))
+                    .SelectMany(
+                        _ => _.GetExportedTypes()
+                                 .Where(t => t.IsImplementationOf<ISD>())
+                    );
+        }
+
         #region IJsonSerializer Members
 
         public string Serialize(object obj)
         {
-            var jsonSerializer = new DataContractJsonSerializer(obj.GetType());
+            var jsonSerializer = new DataContractJsonSerializer(obj.GetType(), KnowTypes);
 
             string json;
             using (var memoryStream = new MemoryStream())
