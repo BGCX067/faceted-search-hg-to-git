@@ -1,0 +1,12 @@
+﻿@model FacetedSearch.Web.Models.HomeViewModel
+@using FacetedSearch.Web;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<h1>@Html.FacetedSearch(Model.SearchOptions)</h1>
+

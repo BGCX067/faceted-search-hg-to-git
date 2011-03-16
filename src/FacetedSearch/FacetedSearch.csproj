@@ -34,9 +34,6 @@
     <Reference Include="Autofac">
       <HintPath>..\..\packages\Autofac.2.2.4.900\lib\NET40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="LinqSpecs">
-      <HintPath>..\..\packages\LinqSpecs.1.0.1\LinqSpecs.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
@@ -61,6 +58,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,6 +112,7 @@
     <Compile Include="QueryBuilder\QueryBuilder.cs" />
     <Compile Include="SD\SearchOptionsSD.cs" />
     <Compile Include="SearchOptions.cs" />
+    <Compile Include="Web\FacetedSearchHtmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
