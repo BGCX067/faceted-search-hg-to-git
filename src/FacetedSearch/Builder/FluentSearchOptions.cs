@@ -6,5 +6,10 @@
         {
             return new SearchOptionsBuilder();
         }
+
+        public static SearchOptionsBuilder<TModel> Configure<TModel>() where TModel : new()
+        {
+            return new SearchOptionsBuilder<TModel>();
+        }
     }
 }

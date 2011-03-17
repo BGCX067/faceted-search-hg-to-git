@@ -83,6 +83,9 @@
     <Compile Include="Common\Visitor.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="FacetedSearch.cs" />
+    <Compile Include="Factory\ISearchOptionsParamBuilderFactory.cs" />
+    <Compile Include="Factory\SearchOptionsParamBuilderBuilderFactory.cs" />
+    <Compile Include="Factory\SearchOptionsQueryParamBuilderBuilderFactory.cs" />
     <Compile Include="IJsonSerializer.cs" />
     <Compile Include="DefaultJsonSerializer.cs" />
     <Compile Include="Mapping\FacatedSearchMapper.cs" />

@@ -22,6 +22,5 @@ namespace FacetedSearch.Params
         {
             get { return SearchOptionsParamType.Text; }
         }
-
     }
 }

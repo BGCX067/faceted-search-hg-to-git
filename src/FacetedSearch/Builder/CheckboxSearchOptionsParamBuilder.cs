@@ -1,10 +1,37 @@
-﻿using FacetedSearch.Params;
+﻿using System;
+using FacetedSearch.Mapping;
+using FacetedSearch.Params;
+using Lokad;
 
 namespace FacetedSearch.Builder
 {
-    public class CheckboxSearchOptionsParamBuilder : BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder>
+    public class CheckboxSearchOptionsParamBuilder<TModel> : CheckboxSearchOptionsParamBuilder where TModel : new()
     {
-        public CheckboxSearchOptionsParamBuilder(CheckboxSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder)
+        private readonly FacatedSearchMapper<TModel> _queryMapper;
+
+        public CheckboxSearchOptionsParamBuilder
+            (CheckboxSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder,
+             FacatedSearchMapper<TModel> queryMapper)
+            : base(param, searchOptionsBuilder)
+        {
+            _queryMapper = queryMapper;
+        }
+
+        public CheckboxSearchOptionsParamBuilder<TModel> MapQuery(Action<FacatedSearchMapper<TModel>> action)
+        {
+            Enforce.Argument(() => action);
+
+            action(_queryMapper);
+            return this;
+        }
+    }
+
+
+    public class CheckboxSearchOptionsParamBuilder :
+        BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder>
+    {
+        public CheckboxSearchOptionsParamBuilder(CheckboxSearchOptionsParam param,
+                                                 SearchOptionsBuilder searchOptionsBuilder)
             : base(param, searchOptionsBuilder)
         {
             _param = param;
