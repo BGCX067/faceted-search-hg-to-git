@@ -15,9 +15,9 @@
         {
             FacatedSearch.Map<User>()
                 .Property(_ => _.Male)
-                .Property(_ => _.Age, PropertyMappingType.RangeValue)
-                .Reference(_ => _.Country.CountryCode.Code)
-                .Reference(_ => _.Country.Id);
+                .Range(_ => _.Age)
+                .List(_ => _.Country.CountryCode.Code)
+                .List(_ => _.Country.Id);
         }
 
         public Simulator()
@@ -66,6 +66,7 @@
         private void PrintOutUsers(IEnumerable<User> sortedUsers)
         {
             var sb = new StringBuilder();
+            sb.AppendLine(string.Format("Total: {0}", sortedUsers.Count()));
             foreach (var sortedUser in sortedUsers)
             {
                 sb.AppendLine("-----------------------------------------");

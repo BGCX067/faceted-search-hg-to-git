@@ -21,7 +21,7 @@ namespace FacetedSearch.Mapping
             _mappers = new Dictionary<PropertyMappingType, PropertyMapper>();
             _mappers[PropertyMappingType.SingleValue] = new SingleValueMapper();
             _mappers[PropertyMappingType.RangeValue] = new RangeValueMapper();
-            _mappers[PropertyMappingType.ReferenceValue] = new MultipleValueMapper(null);
+            _mappers[PropertyMappingType.MultipleValue] = new MultipleValueMapper();
         }
 
         public FacatedSearchMapper()
@@ -30,53 +30,34 @@ namespace FacetedSearch.Mapping
             _propertyReferences = new Dictionary<PropertyMember, PropertyMapper>();
         }
 
-        public FacatedSearchMapper<T> Property(Expression<Func<T, object>> property,
-                                          PropertyMappingType propertyMapper = PropertyMappingType.SingleValue)
+        public FacatedSearchMapper<T> Property<TProperty>(
+            Expression<Func<T, TProperty>> property,
+            PropertyMappingType propertyMappingType = PropertyMappingType.SingleValue)
         {
-            var propertyInfo = GetPropertyInfo(property);
-            _propertyMappings.Add(propertyInfo, propertyMapper);
+            PropertyMember propertyInfo = GetPropertyInfo(property);
+            _propertyMappings.Add(propertyInfo, propertyMappingType);
 
             return this;
         }
 
-
-        public FacatedSearchMapper<T> Reference(Expression<Func<T, object>> referenceProperty, params object[] keyValueReference)
+        public FacatedSearchMapper<T> Range<TProperty>(Expression<Func<T, TProperty>> rangeProperty)
         {
-            if (keyValueReference.Length % 2 != 0)
-            {
-                throw new ArgumentException("keyValueReference");
-            }
-
-            var propertyInfo = GetPropertyInfo(referenceProperty);
-            _propertyMappings.Add(propertyInfo, PropertyMappingType.ReferenceValue);
-
-//            var references = new Dictionary<object, object>();
-//            for (int i = 0; i < keyValueReference.Length; i+=2)
-//            {
-//                references.Add(keyValueReference[i], keyValueReference[i+1]);
-//            }
-//            
-//            _propertyReferences.Add(propertyInfo, new ReferenceValueMapper(references));
-            return this;
+            return Property(rangeProperty, PropertyMappingType.RangeValue);
         }
 
-        private PropertyMember GetPropertyInfo(Expression<Func<T, object>> property)
+        public FacatedSearchMapper<T> List<TProperty>(Expression<Func<T, TProperty>> listProperty)
         {
-            MemberExpression memberExpression = null;
-            if (property.Body is MemberExpression)
+            return Property(listProperty, PropertyMappingType.MultipleValue);
+        }
+
+        private PropertyMember GetPropertyInfo<TProperty>(Expression<Func<T, TProperty>> property)
+        {
+            if(!(property.Body is MemberExpression))
             {
-                memberExpression = property.Body as MemberExpression;
-            }
-            else
-            {
-                if (!(property.Body is UnaryExpression))
-                {
-                    throw new ArgumentException("property");
-                }
-                memberExpression = (property.Body as UnaryExpression).Operand as MemberExpression;
+                throw new ApplicationException("property");
             }
 
-            return new PropertyMember(memberExpression);
+            return new PropertyMember(property.Body as MemberExpression);
         }
 
         public Func<T, bool> Execute(Dictionary<string, object> userChoice)
@@ -87,6 +68,8 @@ namespace FacetedSearch.Mapping
             ParameterExpression parameter = Expression.Parameter(@type, @type.Name.ToLower());
             foreach (var propertyMapping in _propertyMappings)
             {
+                if(!userChoice.Keys.Contains(propertyMapping.Key.Name)) continue;
+
                 PropertyMember propertyMember = propertyMapping.Key;
                 object userChoiceForParameter = userChoice[propertyMember.Name];
                 PropertyMapper propertyMapper = _mappers[propertyMapping.Value];

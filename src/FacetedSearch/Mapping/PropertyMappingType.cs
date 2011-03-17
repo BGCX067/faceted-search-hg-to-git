@@ -2,7 +2,7 @@ namespace FacetedSearch.Mapping
 {
     public enum PropertyMappingType
     {
-        ReferenceValue,
+        MultipleValue,
         SingleValue,
         RangeValue
     }
