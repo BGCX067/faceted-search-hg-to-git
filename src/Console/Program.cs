@@ -19,7 +19,7 @@
             var userChoice = new Dictionary<string, object>();
             userChoice.Add("Male", male);
             userChoice.Add("Age", new Tuple<int, int>(ageFrom, ageTo));
-            userChoice.Add("Country.Id", new List<object> { 1, 2 });
+            userChoice.Add("CountryId", new List<object> { 1, 2 });
             userChoice.Add("Country.CountryCode.Code", new List<object> { 1 });
 
             Simulator.Run(userChoice);

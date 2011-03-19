@@ -4,7 +4,6 @@ namespace FacetedSearch.Mapping
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     public class FacatedSearchMapper
     {
@@ -13,8 +12,7 @@ namespace FacetedSearch.Mapping
     public class FacatedSearchMapper<T> : FacatedSearchMapper
     {
         private static readonly Dictionary<PropertyMappingType, PropertyMapper> _mappers;
-        private readonly Dictionary<PropertyMember, PropertyMappingType> _propertyMappings;
-        private readonly Dictionary<PropertyMember, PropertyMapper> _propertyReferences;
+        private readonly Dictionary<string, PropertyMember> _propertyMappings;
 
         static FacatedSearchMapper()
         {
@@ -26,33 +24,43 @@ namespace FacetedSearch.Mapping
 
         public FacatedSearchMapper()
         {
-            _propertyMappings = new Dictionary<PropertyMember, PropertyMappingType>();
-            _propertyReferences = new Dictionary<PropertyMember, PropertyMapper>();
+            _propertyMappings = new Dictionary<string, PropertyMember>();
         }
 
         public FacatedSearchMapper<T> Property<TProperty>(
             Expression<Func<T, TProperty>> property,
+            string referenceName = null)
+        {
+            return Property(property, referenceName, PropertyMappingType.SingleValue);
+        }
+
+        private FacatedSearchMapper<T> Property<TProperty>(
+            Expression<Func<T, TProperty>> property,
+            string referenceName = null,
             PropertyMappingType propertyMappingType = PropertyMappingType.SingleValue)
         {
             PropertyMember propertyInfo = GetPropertyInfo(property);
-            _propertyMappings.Add(propertyInfo, propertyMappingType);
+            propertyInfo.MappingType = propertyMappingType;
+            _propertyMappings.Add(referenceName ?? propertyInfo.Name, propertyInfo);
 
             return this;
         }
 
-        public FacatedSearchMapper<T> Range<TProperty>(Expression<Func<T, TProperty>> rangeProperty)
+        public FacatedSearchMapper<T> Range<TProperty>(Expression<Func<T, TProperty>> rangeProperty,
+                                                       string referenceName = null)
         {
-            return Property(rangeProperty, PropertyMappingType.RangeValue);
+            return Property(rangeProperty, referenceName, PropertyMappingType.RangeValue);
         }
 
-        public FacatedSearchMapper<T> List<TProperty>(Expression<Func<T, TProperty>> listProperty)
+        public FacatedSearchMapper<T> List<TProperty>(Expression<Func<T, TProperty>> listProperty,
+                                                      string referenceName = null)
         {
-            return Property(listProperty, PropertyMappingType.MultipleValue);
+            return Property(listProperty, referenceName, PropertyMappingType.MultipleValue);
         }
 
         private PropertyMember GetPropertyInfo<TProperty>(Expression<Func<T, TProperty>> property)
         {
-            if(!(property.Body is MemberExpression))
+            if (!(property.Body is MemberExpression))
             {
                 throw new ApplicationException("property");
             }
@@ -68,11 +76,11 @@ namespace FacetedSearch.Mapping
             ParameterExpression parameter = Expression.Parameter(@type, @type.Name.ToLower());
             foreach (var propertyMapping in _propertyMappings)
             {
-                if(!userChoice.Keys.Contains(propertyMapping.Key.Name)) continue;
+                if (!userChoice.Keys.Contains(propertyMapping.Key)) continue;
 
-                PropertyMember propertyMember = propertyMapping.Key;
-                object userChoiceForParameter = userChoice[propertyMember.Name];
-                PropertyMapper propertyMapper = _mappers[propertyMapping.Value];
+                PropertyMember propertyMember = propertyMapping.Value;
+                object userChoiceForParameter = userChoice[propertyMapping.Key];
+                PropertyMapper propertyMapper = _mappers[propertyMember.MappingType];
 
                 BinaryExpression expression =
                     propertyMapper.GetCompareExpression(propertyMember.AccessExpression(parameter),

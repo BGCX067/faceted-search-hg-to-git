@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace FacetedSearch.Mapping
 {
-    using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
 
     public class MultipleValueMapper : PropertyMapper
@@ -13,7 +10,7 @@ namespace FacetedSearch.Mapping
             var selectedValues = (IList<object>) userChoice;
 
             BinaryExpression contains = null;
-            foreach (var o in selectedValues)
+            foreach (object o in selectedValues)
             {
                 if (contains == null)
                 {

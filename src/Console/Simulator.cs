@@ -5,11 +5,10 @@
     using System.Linq;
     using System.Text;
     using FacetedSearch;
-    using FacetedSearch.Mapping;
 
     internal class Simulator
     {
-        private IList<User> _users = new List<User>();
+        private readonly IList<User> _users = new List<User>();
 
         static Simulator()
         {
@@ -17,7 +16,7 @@
                 .Property(_ => _.Male)
                 .Range(_ => _.Age)
                 .List(_ => _.Country.CountryCode.Code)
-                .List(_ => _.Country.Id);
+                .List(_ => _.Country.Id, "CountryId");
         }
 
         public Simulator()
@@ -43,8 +42,8 @@
             user.Male = male;
             user.Name = userName;
             user.Country = coutry == "USA"
-                                 ? new Country { Id = 1, Name = "USA" }
-                                 : new Country { Id = 2, Name = "Ukraine" };
+                               ? new Country {Id = 1, Name = "USA"}
+                               : new Country {Id = 2, Name = "Ukraine"};
 
             _users.Add(user);
         }
@@ -53,13 +52,13 @@
         {
             var simulator = new Simulator();
 
-            var findExpression = FacatedSearch.Expression<User>(userChoice);
+            Func<User, bool> findExpression = FacatedSearch.Expression<User>(userChoice);
             simulator.SimulateDbRequest(findExpression);
         }
 
         private void SimulateDbRequest(Func<User, bool> findExpression)
         {
-            var sortedUsers = _users.Where(findExpression);
+            IEnumerable<User> sortedUsers = _users.Where(findExpression);
             PrintOutUsers(sortedUsers);
         }
 
@@ -67,7 +66,7 @@
         {
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("Total: {0}", sortedUsers.Count()));
-            foreach (var sortedUser in sortedUsers)
+            foreach (User sortedUser in sortedUsers)
             {
                 sb.AppendLine("-----------------------------------------");
                 sb.AppendFormat("User name: {0}\n", sortedUser.Name);
