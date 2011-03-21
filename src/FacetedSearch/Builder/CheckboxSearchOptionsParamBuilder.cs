@@ -1,49 +1,35 @@
 ﻿using System;
+using System.Linq.Expressions;
 using FacetedSearch.Mapping;
 using FacetedSearch.Params;
 using Lokad;
 
 namespace FacetedSearch.Builder
 {
-    public class CheckboxSearchOptionsParamBuilder<TModel> : CheckboxSearchOptionsParamBuilder where TModel : new()
+    public class CheckboxSearchOptionsParamBuilder<TModel> : BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder<TModel>, TModel> where TModel : new()
     {
-        private readonly FacatedSearchMapper<TModel> _queryMapper;
-
         public CheckboxSearchOptionsParamBuilder
-            (CheckboxSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder,
+            (CheckboxSearchOptionsParam param, SearchOptionsBuilder<TModel> searchOptionsBuilder,
              FacatedSearchMapper<TModel> queryMapper)
-            : base(param, searchOptionsBuilder)
+            : base(param, searchOptionsBuilder, queryMapper)
         {
-            _queryMapper = queryMapper;
         }
 
-        public CheckboxSearchOptionsParamBuilder<TModel> MapQuery(Action<FacatedSearchMapper<TModel>> action)
+        public CheckboxSearchOptionsParamBuilder<TModel> MapQuery<TProperty>(Expression<Func<TModel, TProperty>> property)
         {
-            Enforce.Argument(() => action);
+            Enforce.Argument(() => property);
 
-            action(_queryMapper);
+            _queryMapper.Property(property, _param.Name);
             return this;
         }
-    }
 
-
-    public class CheckboxSearchOptionsParamBuilder :
-        BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder>
-    {
-        public CheckboxSearchOptionsParamBuilder(CheckboxSearchOptionsParam param,
-                                                 SearchOptionsBuilder searchOptionsBuilder)
-            : base(param, searchOptionsBuilder)
-        {
-            _param = param;
-        }
-
-        public CheckboxSearchOptionsParamBuilder Disabled(bool isDisabled = true)
+        public CheckboxSearchOptionsParamBuilder<TModel> Disabled(bool isDisabled = true)
         {
             _param.IsDisabled = isDisabled;
             return this;
         }
 
-        public CheckboxSearchOptionsParamBuilder Checked(bool isChecked = true)
+        public CheckboxSearchOptionsParamBuilder<TModel> Checked(bool isChecked = true)
         {
             _param.IsChecked = isChecked;
             return this;

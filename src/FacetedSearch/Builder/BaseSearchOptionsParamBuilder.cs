@@ -1,21 +1,25 @@
-﻿using FacetedSearch.Params;
+﻿using FacetedSearch.Mapping;
+using FacetedSearch.Params;
 
 namespace FacetedSearch.Builder
 {
-    public abstract class BaseSearchOptionsParamBuilder<T, TBuilder>
+    public abstract class BaseSearchOptionsParamBuilder<T, TBuilder, TModel>
         where T : BaseSearchOptionsParam
-        where TBuilder : BaseSearchOptionsParamBuilder<T, TBuilder>
+        where TBuilder : BaseSearchOptionsParamBuilder<T, TBuilder, TModel> 
+        where TModel : new()
     {
-        protected readonly SearchOptionsBuilder _searchOptionsBuilder;
+        protected readonly SearchOptionsBuilder<TModel> _searchOptionsBuilder;
+        protected readonly FacatedSearchMapper<TModel> _queryMapper;
         protected T _param;
 
-        protected BaseSearchOptionsParamBuilder(T param, SearchOptionsBuilder searchOptionsBuilder)
+        protected BaseSearchOptionsParamBuilder(T param, SearchOptionsBuilder<TModel> searchOptionsBuilder, FacatedSearchMapper<TModel> queryMapper)
         {
             _param = param;
+            _queryMapper = queryMapper;
             _searchOptionsBuilder = searchOptionsBuilder;
         }
 
-        public SearchOptionsBuilder End()
+        public SearchOptionsBuilder<TModel> End()
         {
             return _searchOptionsBuilder;
         }

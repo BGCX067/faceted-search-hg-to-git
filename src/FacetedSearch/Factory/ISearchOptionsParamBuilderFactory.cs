@@ -3,9 +3,9 @@ using FacetedSearch.Params;
 
 namespace FacetedSearch.Factory
 {
-    public interface ISearchOptionsParamBuilderFactory
+    public interface ISearchOptionsParamBuilderFactory<TModel> where TModel : new()
     {
-        TextSearchOptionsParamBuilder GetTextParamBuilder(TextSearchOptionsParam textSearchOptionsParam, SearchOptionsBuilder searchOptionsBuilder);
-        CheckboxSearchOptionsParamBuilder GetCheckboxParamBuilder(CheckboxSearchOptionsParam checkboxSearchOptionsParam, SearchOptionsBuilder searchOptionsBuilder);
+        TextSearchOptionsParamBuilder<TModel> GetTextParamBuilder(TextSearchOptionsParam textSearchOptionsParam, SearchOptionsBuilder<TModel> searchOptionsBuilder);
+        CheckboxSearchOptionsParamBuilder<TModel> GetCheckboxParamBuilder(CheckboxSearchOptionsParam checkboxSearchOptionsParam, SearchOptionsBuilder<TModel> searchOptionsBuilder);
     }
 }

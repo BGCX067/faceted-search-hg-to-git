@@ -1,13 +1,14 @@
 ﻿using FacetedSearch.Builder;
+using FacetedSearch.Mapping;
 using FacetedSearch.Tests.Params;
 
 namespace FacetedSearch.Tests.Builder
 {
     public class TestSearchOptionsParamBuilder :
-        BaseSearchOptionsParamBuilder<TestSearchOptionsParam, TestSearchOptionsParamBuilder>
+        BaseSearchOptionsParamBuilder<TestSearchOptionsParam, TestSearchOptionsParamBuilder, object>
     {
-        public TestSearchOptionsParamBuilder(TestSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder)
-            : base(param, searchOptionsBuilder)
+        public TestSearchOptionsParamBuilder(TestSearchOptionsParam param, SearchOptionsBuilder<object> searchOptionsBuilder, FacatedSearchMapper<object> queryMapper)
+            : base(param, searchOptionsBuilder, queryMapper)
         {
             _param = param;
         }

@@ -1,46 +1,33 @@
 ﻿using System;
+using System.Linq.Expressions;
 using FacetedSearch.Mapping;
 using FacetedSearch.Params;
 using Lokad;
 
 namespace FacetedSearch.Builder
 {
-    public class TextSearchOptionsParamBuilder<TModel> : TextSearchOptionsParamBuilder where TModel : new()
+    public class TextSearchOptionsParamBuilder<TModel> : BaseSearchOptionsParamBuilder<TextSearchOptionsParam, TextSearchOptionsParamBuilder<TModel>, TModel> where TModel : new()
     {
-        private readonly FacatedSearchMapper<TModel> _queryMapper;
-
-        public TextSearchOptionsParamBuilder(TextSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder, FacatedSearchMapper<TModel> queryMapper)
-            : base(param, searchOptionsBuilder)
+        public TextSearchOptionsParamBuilder(TextSearchOptionsParam param, SearchOptionsBuilder<TModel> searchOptionsBuilder, FacatedSearchMapper<TModel> queryMapper)
+            : base(param, searchOptionsBuilder, queryMapper)
         {
-            _queryMapper = queryMapper;
         }
 
-        public TextSearchOptionsParamBuilder<TModel> MapQuery(Action<FacatedSearchMapper<TModel>> action)
+        public TextSearchOptionsParamBuilder<TModel> MapQuery<TProperty>(Expression<Func<TModel, TProperty>> property)
         {
-            Enforce.Argument(() => action);
+            Enforce.Argument(() => property);
 
-            action(_queryMapper);
+            _queryMapper.Property(property, _param.Name);
             return this;
         }
 
-    }
-
-    public class TextSearchOptionsParamBuilder :
-        BaseSearchOptionsParamBuilder<TextSearchOptionsParam, TextSearchOptionsParamBuilder>
-    {
-        public TextSearchOptionsParamBuilder(TextSearchOptionsParam param, SearchOptionsBuilder searchOptionsBuilder)
-            : base(param, searchOptionsBuilder)
-        {
-            _param = param;
-        }
-
-        public TextSearchOptionsParamBuilder Disabled(bool isDisabled = true)
+        public TextSearchOptionsParamBuilder<TModel> Disabled(bool isDisabled = true)
         {
             _param.IsDisabled = isDisabled;
             return this;
         }
 
-        public TextSearchOptionsParamBuilder Watermark(string watermark)
+        public TextSearchOptionsParamBuilder<TModel> Watermark(string watermark)
         {
             _param.Watermark = watermark;
             return this;
