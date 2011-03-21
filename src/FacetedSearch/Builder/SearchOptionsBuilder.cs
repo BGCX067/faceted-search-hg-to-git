@@ -8,16 +8,7 @@ namespace FacetedSearch.Builder
 {
     public class SearchOptionsBuilder<TModel> where TModel : new()
     {
-        private readonly FacatedSearchMapper<TModel> _queryMapper = FacatedSearch.Map<TModel>();
-
-        protected ISearchOptionsParamBuilderFactory<TModel> SearchOptionsParamBuilderBuilderFactory
-        {
-            get
-            {
-                return _searchOptionsParamBuilderBuilderFactory ??
-                       (_searchOptionsParamBuilderBuilderFactory = new SearchOptionsQueryParamBuilderBuilderFactory<TModel>(_queryMapper));
-            }
-        }
+        private readonly FacatedSearchMapper<TModel> _queryMapper = new FacatedSearchMapper<TModel>();
 
         private readonly SearchOptions _searchOptions;
 
@@ -27,6 +18,16 @@ namespace FacetedSearch.Builder
         {
             jsonSerializer = jsonSerializer ?? new DefaultJsonSerializer();
             _searchOptions = new SearchOptions(jsonSerializer);
+        }
+
+        protected ISearchOptionsParamBuilderFactory<TModel> SearchOptionsParamBuilderBuilderFactory
+        {
+            get
+            {
+                return _searchOptionsParamBuilderBuilderFactory ??
+                       (_searchOptionsParamBuilderBuilderFactory =
+                        new SearchOptionsQueryParamBuilderBuilderFactory<TModel>(_queryMapper));
+            }
         }
 
         public TextSearchOptionsParamBuilder<TModel> Text(string searchOptionsName = "")
