@@ -2,9 +2,9 @@
 {
     public class FluentSearchOptions : IFluentSearchOptions
     {
-        public static SearchOptionsBuilder Configure()
+        public static SearchOptionsBuilder<object> Configure()
         {
-            return new SearchOptionsBuilder();
+            return new SearchOptionsBuilder<object>();
         }
 
         public static SearchOptionsBuilder<TModel> Configure<TModel>() where TModel : new()

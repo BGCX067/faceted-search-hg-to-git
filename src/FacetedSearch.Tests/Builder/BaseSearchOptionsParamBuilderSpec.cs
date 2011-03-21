@@ -1,4 +1,5 @@
 ﻿using FacetedSearch.Builder;
+using FacetedSearch.Mapping;
 using FacetedSearch.Tests.Params;
 using Machine.Specifications;
 
@@ -34,7 +35,7 @@ namespace FacetedSearch.Tests.Builder
 
         private It should_builder_param_equal_input_param = () => _searchOptionsBuilder.ShouldEqual(_searchOptionsBuilder);
 
-        private static SearchOptionsBuilder _searchOptionsBuilder;
+        private static SearchOptionsBuilder<object> _searchOptionsBuilder;
     }
     
     [Subject("BaseSearchOptionsParamBuilder Description param")]
@@ -80,15 +81,17 @@ namespace FacetedSearch.Tests.Builder
         protected static string _jsonString;
         protected static ISearchOptions _searchOptions;
         protected static TestSearchOptionsParam _testParam;
-        protected static SearchOptionsBuilder _searchBiulder;
+        protected static SearchOptionsBuilder<object> _searchBiulder;
         protected static TestSearchOptionsParamBuilder _builder;
+        protected static FacatedSearchMapper<object> _queryMapper;
 
         protected static void Init()
         {
             _testParam = new TestSearchOptionsParam();
             _jsonSerializer = new DefaultJsonSerializer();
-            _searchBiulder = new SearchOptionsBuilder(_jsonSerializer);
-            _builder = new TestSearchOptionsParamBuilder(_testParam, _searchBiulder);
+            _searchBiulder = new SearchOptionsBuilder<object>(_jsonSerializer);
+            _queryMapper = new FacatedSearchMapper<object>();
+            _builder = new TestSearchOptionsParamBuilder(_testParam, _searchBiulder, _queryMapper);
             _searchOptions = new SearchOptions(_jsonSerializer);
         }
     }

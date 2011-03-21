@@ -4,7 +4,7 @@ using FacetedSearch.Params;
 
 namespace FacetedSearch.Factory
 {
-    public class SearchOptionsQueryParamBuilderBuilderFactory<TModel> : ISearchOptionsParamBuilderFactory
+    public class SearchOptionsQueryParamBuilderBuilderFactory<TModel> : ISearchOptionsParamBuilderFactory<TModel>
         where TModel : new()
     {
         private readonly FacatedSearchMapper<TModel> _queryMapper;
@@ -16,14 +16,14 @@ namespace FacetedSearch.Factory
 
         #region ISearchOptionsParamBuilderFactory Members
 
-        public TextSearchOptionsParamBuilder GetTextParamBuilder(TextSearchOptionsParam textSearchOptionsParam,
-                                                                 SearchOptionsBuilder searchOptionsBuilder)
+        public TextSearchOptionsParamBuilder<TModel> GetTextParamBuilder(TextSearchOptionsParam textSearchOptionsParam,
+                                                                 SearchOptionsBuilder<TModel> searchOptionsBuilder)
         {
             return new TextSearchOptionsParamBuilder<TModel>(textSearchOptionsParam, searchOptionsBuilder, _queryMapper);
         }
 
-        public CheckboxSearchOptionsParamBuilder GetCheckboxParamBuilder(
-            CheckboxSearchOptionsParam checkboxSearchOptionsParam, SearchOptionsBuilder searchOptionsBuilder)
+        public CheckboxSearchOptionsParamBuilder<TModel> GetCheckboxParamBuilder(
+            CheckboxSearchOptionsParam checkboxSearchOptionsParam, SearchOptionsBuilder<TModel> searchOptionsBuilder)
         {
             return new CheckboxSearchOptionsParamBuilder<TModel>(checkboxSearchOptionsParam, searchOptionsBuilder,
                                                                  _queryMapper);

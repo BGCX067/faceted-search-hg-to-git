@@ -17,7 +17,7 @@ namespace FacetedSearch.Web.Controllers
             var viewModel = new HomeViewModel
                                 {
                                     SearchOptions =
-                                        FluentSearchOptions.Configure<HomeController>().Text("Name").MapQuery(_ => _.Property(x => x.ViewBag)). End().BuildSearchOptions()
+                                        FluentSearchOptions.Configure<HomeController>().Text("Name").MapQuery(x => x.ViewBag). End().BuildSearchOptions()
                                 };
             return View(viewModel);
         }
