@@ -1,12 +1,14 @@
-﻿using System;
-using System.Linq.Expressions;
-using FacetedSearch.Mapping;
-using FacetedSearch.Params;
-using Lokad;
-
-namespace FacetedSearch.Builder
+﻿namespace FacetedSearch.Builder
 {
-    public class CheckboxSearchOptionsParamBuilder<TModel> : BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder<TModel>, TModel> where TModel : new()
+    using System;
+    using System.Linq.Expressions;
+    using Lokad;
+    using Mapping;
+    using Params;
+
+    public class CheckboxSearchOptionsParamBuilder<TModel> :
+        BaseSearchOptionsParamBuilder<CheckboxSearchOptionsParam, CheckboxSearchOptionsParamBuilder<TModel>, TModel>
+        where TModel : new()
     {
         public CheckboxSearchOptionsParamBuilder
             (CheckboxSearchOptionsParam param, SearchOptionsBuilder<TModel> searchOptionsBuilder,
@@ -15,7 +17,8 @@ namespace FacetedSearch.Builder
         {
         }
 
-        public CheckboxSearchOptionsParamBuilder<TModel> MapQuery<TProperty>(Expression<Func<TModel, TProperty>> property)
+        public CheckboxSearchOptionsParamBuilder<TModel> MapQuery<TProperty>(
+            Expression<Func<TModel, TProperty>> property)
         {
             Enforce.Argument(() => property);
 

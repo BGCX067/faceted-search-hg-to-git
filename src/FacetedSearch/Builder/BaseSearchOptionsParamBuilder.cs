@@ -1,18 +1,19 @@
-﻿using FacetedSearch.Mapping;
-using FacetedSearch.Params;
-
-namespace FacetedSearch.Builder
+﻿namespace FacetedSearch.Builder
 {
+    using Mapping;
+    using Params;
+
     public abstract class BaseSearchOptionsParamBuilder<T, TBuilder, TModel>
         where T : BaseSearchOptionsParam
-        where TBuilder : BaseSearchOptionsParamBuilder<T, TBuilder, TModel> 
+        where TBuilder : BaseSearchOptionsParamBuilder<T, TBuilder, TModel>
         where TModel : new()
     {
-        protected readonly SearchOptionsBuilder<TModel> _searchOptionsBuilder;
         protected readonly FacatedSearchMapper<TModel> _queryMapper;
+        protected readonly SearchOptionsBuilder<TModel> _searchOptionsBuilder;
         protected T _param;
 
-        protected BaseSearchOptionsParamBuilder(T param, SearchOptionsBuilder<TModel> searchOptionsBuilder, FacatedSearchMapper<TModel> queryMapper)
+        protected BaseSearchOptionsParamBuilder(T param, SearchOptionsBuilder<TModel> searchOptionsBuilder,
+                                                FacatedSearchMapper<TModel> queryMapper)
         {
             _param = param;
             _queryMapper = queryMapper;
@@ -29,13 +30,13 @@ namespace FacetedSearch.Builder
             _param.Description = description;
             return (TBuilder) this;
         }
-        
+
         public TBuilder Order(int orderIndex)
         {
             _param.Order = orderIndex;
             return (TBuilder) this;
         }
-        
+
         public TBuilder Help(string help)
         {
             _param.Help = help;

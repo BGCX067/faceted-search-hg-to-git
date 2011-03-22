@@ -10,6 +10,8 @@ namespace FacetedSearch.Params
 
         public TextSearchOptionsParam(string searchOptionsName) : base(searchOptionsName)
         {
+            Text = string.Empty;
+            Watermark = string.Empty;
         }
 
         public string Text { get; set; }

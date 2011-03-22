@@ -76,15 +76,19 @@
     <Compile Include="Builder\FluentSearchOptions.cs" />
     <Compile Include="Builder\IFluentSearchOptions.cs" />
     <Compile Include="Builder\SearchOptionsBuilder.cs" />
-    <Compile Include="Builder\Tag\TagBuilder.cs" />
+    <Compile Include="Builder\Tag\CheckboxTagBuilder.cs" />
+    <Compile Include="Builder\Tag\TextboxTagBuilder.cs" />
+    <Compile Include="Builder\Tag\HtmlTextWriterTypeAttribute.cs" />
+    <Compile Include="Builder\Tag\InputTagBaseBuilder.cs" />
+    <Compile Include="Builder\Tag\LabelTagBuilder.cs" />
+    <Compile Include="Builder\Tag\HtmlTagBaseBuilder.cs" />
+    <Compile Include="Builder\Tag\HtmlTagBuilder.cs" />
     <Compile Include="Builder\TextSearchOptionsParamBuilder.cs" />
     <Compile Include="Common\IBuilder.cs" />
     <Compile Include="Common\IParamVisitorType.cs" />
     <Compile Include="Common\IVisitor.cs" />
     <Compile Include="Common\IVisitorElement.cs" />
     <Compile Include="Common\Visitor.cs" />
-    <Compile Include="Extensions\IDictionaryExtensions.cs" />
-    <Compile Include="Extensions\TagBuilderExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="FacetedSearch.cs" />
     <Compile Include="Factory\ISearchOptionsParamBuilderFactory.cs" />
@@ -118,7 +122,9 @@
     <Compile Include="SD\SearchOptionsSD.cs" />
     <Compile Include="SearchOptions.cs" />
     <Compile Include="SerializationTypesAttribute.cs" />
+    <Compile Include="Web\BlockRenderer.cs" />
     <Compile Include="Web\FacetedSearchHtmlHelper.cs" />
+    <Compile Include="Web\Html.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

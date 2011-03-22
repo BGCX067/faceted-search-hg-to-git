@@ -1,14 +1,18 @@
-﻿using System;
-using System.Linq.Expressions;
-using FacetedSearch.Mapping;
-using FacetedSearch.Params;
-using Lokad;
-
-namespace FacetedSearch.Builder
+﻿namespace FacetedSearch.Builder
 {
-    public class TextSearchOptionsParamBuilder<TModel> : BaseSearchOptionsParamBuilder<TextSearchOptionsParam, TextSearchOptionsParamBuilder<TModel>, TModel> where TModel : new()
+    using System;
+    using System.Linq.Expressions;
+    using Lokad;
+    using Mapping;
+    using Params;
+
+    public class TextSearchOptionsParamBuilder<TModel> :
+        BaseSearchOptionsParamBuilder<TextSearchOptionsParam, TextSearchOptionsParamBuilder<TModel>, TModel>
+        where TModel : new()
     {
-        public TextSearchOptionsParamBuilder(TextSearchOptionsParam param, SearchOptionsBuilder<TModel> searchOptionsBuilder, FacatedSearchMapper<TModel> queryMapper)
+        public TextSearchOptionsParamBuilder(TextSearchOptionsParam param,
+                                             SearchOptionsBuilder<TModel> searchOptionsBuilder,
+                                             FacatedSearchMapper<TModel> queryMapper)
             : base(param, searchOptionsBuilder, queryMapper)
         {
         }

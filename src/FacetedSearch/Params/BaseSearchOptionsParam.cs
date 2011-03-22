@@ -12,9 +12,14 @@ namespace FacetedSearch.Params
 
         protected BaseSearchOptionsParam()
         {
+            Help = string.Empty;
+            Description = string.Empty;
+// ReSharper disable DoNotCallOverridableMethodsInConstructor
+            Name = string.Empty;
+// ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
-        protected BaseSearchOptionsParam(string name)
+        protected BaseSearchOptionsParam(string name):this()
         {
             _name = name;
         }

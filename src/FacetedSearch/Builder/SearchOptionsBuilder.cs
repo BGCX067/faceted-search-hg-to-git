@@ -1,11 +1,11 @@
-﻿using System;
-using FacetedSearch.Factory;
-using FacetedSearch.Mapping;
-using FacetedSearch.Params;
-using Lokad;
-
-namespace FacetedSearch.Builder
+﻿namespace FacetedSearch.Builder
 {
+    using System;
+    using Factory;
+    using Lokad;
+    using Mapping;
+    using Params;
+
     public class SearchOptionsBuilder<TModel> where TModel : new()
     {
         private readonly FacatedSearchMapper<TModel> _queryMapper = new FacatedSearchMapper<TModel>();
@@ -18,16 +18,8 @@ namespace FacetedSearch.Builder
         {
             jsonSerializer = jsonSerializer ?? new DefaultJsonSerializer();
             _searchOptions = new SearchOptions(jsonSerializer);
-        }
-
-        protected ISearchOptionsParamBuilderFactory<TModel> SearchOptionsParamBuilderBuilderFactory
-        {
-            get
-            {
-                return _searchOptionsParamBuilderBuilderFactory ??
-                       (_searchOptionsParamBuilderBuilderFactory =
-                        new SearchOptionsQueryParamBuilderBuilderFactory<TModel>(_queryMapper));
-            }
+            _searchOptionsParamBuilderBuilderFactory =
+                new SearchOptionsQueryParamBuilderBuilderFactory<TModel>(_queryMapper);
         }
 
         public TextSearchOptionsParamBuilder<TModel> Text(string searchOptionsName = "")

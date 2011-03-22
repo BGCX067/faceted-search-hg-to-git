@@ -10,9 +10,10 @@ namespace FacetedSearch.Params
 
         public CheckboxSearchOptionsParam(string searchOptionsName) : base(searchOptionsName)
         {
+            Value = string.Empty;
         }
 
-        public string Text { get; set; }
+        public string Value { get; set; }
 
         public bool IsDisabled { get; set; }
 
