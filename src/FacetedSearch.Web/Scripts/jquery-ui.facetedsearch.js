@@ -1,8 +1,8 @@
 /*
 * New BSD license
-* http://code.google.com/p/faceted-search/license
+* http://www.opensource.org/licenses/bsd-license.php
 *
-* Copyright 2011, AUTHORS.txt (http://code.google.com/p/faceted-search/about)
+* Copyright 2011, AUTHORS.txt (http://code.google.com/p/faceted-search/wiki/About)
 *
 * http://code.google.com/p/faceted-search/
 *

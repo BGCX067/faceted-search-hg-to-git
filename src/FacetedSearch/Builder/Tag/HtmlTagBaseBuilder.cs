@@ -47,7 +47,7 @@
 
         public THtmlTag Name(string name)
         {
-            SetAttribute(HtmlTextWriterAttribute.Id, name);
+            SetAttribute(HtmlTextWriterAttribute.Name, name);
             return (THtmlTag) this;
         }
 

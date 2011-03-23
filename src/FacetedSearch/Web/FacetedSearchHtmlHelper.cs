@@ -23,13 +23,13 @@
                         .ToString());
         }
 
-        public static MvcHtmlString RenderCheckbox<TModel>(this HtmlHelper<TModel> htmlHelper,
+        public static MvcHtmlString FacetedSearchForCheckbox<TModel>(this HtmlHelper<TModel> htmlHelper,
                                                            CheckboxSearchOptionsParam param)
         {
             return MvcHtmlString.Create(Html.RenderCheckbox(param).Render());
         }
 
-        public static MvcHtmlString RenderTextbox<TModel>(this HtmlHelper<TModel> htmlHelper,
+        public static MvcHtmlString FacetedSearchForTextbox<TModel>(this HtmlHelper<TModel> htmlHelper,
                                                           TextSearchOptionsParam param)
         {
             return MvcHtmlString.Create(Html.RenderTextbox(param).Render());
