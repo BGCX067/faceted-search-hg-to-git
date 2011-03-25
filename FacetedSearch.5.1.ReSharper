@@ -116,27 +116,6 @@
         </Variables>
         <CustomProperties />
       </Template>
-      <Template uid="24e9f54e-eea1-46b7-a83c-818b56dc467f" shortcut="met" description="Generic method template" text="public $void$ $Name$&lt;$T$&gt;($string$ $name$)&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
-        <Categories />
-        <Variables>
-          <Variable name="void" expression="guessExpectedType()" initialRange="0" />
-          <Variable name="Name" expression="" initialRange="0" />
-          <Variable name="string" expression="guessExpectedType()" initialRange="0" />
-          <Variable name="T" expression="guessExpectedType()" initialRange="0" />
-          <Variable name="name" expression="suggestVariableName()" initialRange="0" />
-        </Variables>
-        <CustomProperties />
-      </Template>
-      <Template uid="16e8dd0a-25aa-4a58-8c1d-8600f2831973" shortcut="me" description="Method template" text="public $void$ $Name$($string$ $name$)&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
-        <Categories />
-        <Variables>
-          <Variable name="void" expression="guessExpectedType()" initialRange="0" />
-          <Variable name="Name" expression="" initialRange="0" />
-          <Variable name="string" expression="guessExpectedType()" initialRange="0" />
-          <Variable name="name" expression="guessExpectedType()" initialRange="0" />
-        </Variables>
-        <CustomProperties />
-      </Template>
     </LiveTemplates>
   </SharedSolutionTemplateManager>
 </Configuration>
