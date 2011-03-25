@@ -62,7 +62,7 @@ namespace FacetedSearch.Mapping
         {
             if (!(property.Body is MemberExpression))
             {
-                throw new ApplicationException("property");
+                throw new ArgumentException("Expression must contains expression for object property access");
             }
 
             return new PropertyMember(property.Body as MemberExpression);
