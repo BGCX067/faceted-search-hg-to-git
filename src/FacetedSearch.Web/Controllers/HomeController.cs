@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using FacetedSearch.Builder;
-using FacetedSearch.Web.Models;
-
-namespace FacetedSearch.Web.Controllers
+﻿namespace FacetedSearch.Web.Controllers
 {
+    using System.Web.Mvc;
+    using Builder;
+    using Models;
+
     public class HomeController : Controller
     {
         //
@@ -17,10 +13,10 @@ namespace FacetedSearch.Web.Controllers
             var viewModel = new HomeViewModel
                                 {
                                     SearchOptions =
-                                        FluentSearchOptions.Configure<HomeController>().Text("Name").MapQuery(x => x.ViewBag). End().BuildSearchOptions()
+                                        FluentSearchOptions.Configure<HomeController>().Text("Name").MapQuery(
+                                            x => x.ViewBag).End().BuildSearchOptions()
                                 };
             return View(viewModel);
         }
-
     }
 }

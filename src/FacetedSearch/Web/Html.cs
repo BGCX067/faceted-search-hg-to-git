@@ -6,6 +6,8 @@
 
     public class Html
     {
+        public const string FsParamConst = "fs-param";
+
         public static List<BlockRenderer> RenderSearchOptions(SearchOptions searchOptions)
         {
             var blocks = new List<BlockRenderer>();
@@ -36,6 +38,7 @@
                                       .Name(checkboxSearchOptionsParam.Name))
                                       .Value(checkboxSearchOptionsParam.Value)
                                       .Checked(checkboxSearchOptionsParam.IsChecked)
+                                      .CssClass(FsParamConst)
                                       .TagBuilder);
             blockRenderer.Enqueue(new LabelTagBuilder()
                                       .InnerText(checkboxSearchOptionsParam.Description)
@@ -55,6 +58,7 @@
                                       .Id(textSearchOptionsParam.Name)
                                       .Name(textSearchOptionsParam.Name))
                                       .Value(textSearchOptionsParam.Text)
+                                      .CssClass(FsParamConst)
                                       .TagBuilder);
             blockRenderer.Enqueue(new LabelTagBuilder()
                                       .InnerText(textSearchOptionsParam.Description)

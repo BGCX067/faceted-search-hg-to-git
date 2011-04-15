@@ -1,4 +1,7 @@
-/*
+/// <reference path="jquery-1.4.4.js" />
+/// <reference path="jquery-ui.js" />
+
+/*!
 * New BSD license
 * http://www.opensource.org/licenses/bsd-license.php
 *
@@ -16,28 +19,33 @@
 *   jquery.ui.core.js
 *   jquery.ui.widget.js
 */
-(function ($, undefined) {
 
+/*jslint white: true, browser: true, onevar: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true, strict: false */
+/*global document: false, jQuery: false */
+
+(function ($, undefined) {
     $.widget("ui.facetedsearch", {
         options: {
+            HtmlContainerName: null,
+            HtmlData: null,
+            Items: [],
+            createUI: false,
             value: 0,
             max: 100
+        },
+
+        _init: function () {
         },
 
         min: 0,
 
         _create: function () {
-            this.element
-			.addClass("ui-progressbar ui-widget ui-widget-content ui-corner-all")
-			.attr({
-			    role: "progressbar",
-			    "aria-valuemin": this.min,
-			    "aria-valuemax": this.options.max,
-			    "aria-valuenow": this._value()
-			});
+            if (this.options.createUI) {
+                this.valueDiv = $("<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>")
+			        .appendTo(this.element);
+            }
 
-            this.valueDiv = $("<div class='ui-progressbar-value ui-widget-header ui-corner-left'></div>")
-			.appendTo(this.element);
+            var uiParams = this.element.find(".fs-param");
 
             this.oldValue = this._value();
             this._refreshValue();

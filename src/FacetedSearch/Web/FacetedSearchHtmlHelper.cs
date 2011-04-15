@@ -23,6 +23,11 @@
                         .ToString());
         }
 
+        public static MvcHtmlString FacetedSearchJsInit<TModel>(this HtmlHelper<TModel> htmlHelper, string elementSelector, SearchOptions searchOptions)
+        {
+            return searchOptions == null ? MvcHtmlString.Empty : MvcHtmlString.Create(string.Format("$(\"{0}\").facetedsearch({1});", elementSelector, searchOptions.GetJson()));
+        }
+
         public static MvcHtmlString FacetedSearchForCheckbox<TModel>(this HtmlHelper<TModel> htmlHelper,
                                                            CheckboxSearchOptionsParam param)
         {

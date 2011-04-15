@@ -35,5 +35,11 @@
             SetAttribute(HtmlTextWriterAttribute.Value, value);
             return (TInputTagBuilder) this;
         }
+
+        public TInputTagBuilder CssClass(string cssClass)
+        {
+            SetCssClass(cssClass);
+            return (TInputTagBuilder)this;
+        }
     }
 }
