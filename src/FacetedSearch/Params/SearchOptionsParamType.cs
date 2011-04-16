@@ -3,6 +3,6 @@
     public enum SearchOptionsParamType
     {
         Text,
-        Checkbox
+        Checkbox,
     }
 }

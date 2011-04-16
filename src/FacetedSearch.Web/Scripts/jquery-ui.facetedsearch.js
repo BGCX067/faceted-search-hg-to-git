@@ -24,6 +24,40 @@
 /*global document: false, jQuery: false */
 
 (function ($, undefined) {
+    $.fs = $.fs || {};
+
+    $.fs.manager = {
+        options: {},
+        init: function (options) {
+            this.options = options;
+            for (item in this.options.Items) {
+                $.fs.params
+            }
+        }
+    };
+
+    $.fs.paramBase = {
+        type: "",
+        init: function (container, item) {
+        },
+        update: function () {
+        },
+        manager: $.fs.manager
+    };
+
+    $.fs.params = {
+        text: $.extend(true, {}, $.fs.paramBase, {
+            init: function (container, item) {
+                container.bind("focusout", function () {
+                    var text = $(this).val();
+                });
+            }
+        }),
+        checkbox: $.extend(true, {
+        }, $.fs.paramBase)
+    };
+
+
     $.widget("ui.facetedsearch", {
         options: {
             HtmlContainerName: null,
@@ -48,7 +82,6 @@
             var uiParams = this.element.find(".fs-param");
 
             this.oldValue = this._value();
-            this._refreshValue();
         },
 
         destroy: function () {
@@ -96,22 +129,9 @@
 
         _percentage: function () {
             return 100 * this._value() / this.options.max;
-        },
-
-        _refreshValue: function () {
-            var value = this.value();
-            var percentage = this._percentage();
-
-            if (this.oldValue !== value) {
-                this.oldValue = value;
-                this._trigger("change");
-            }
-
-            this.valueDiv
-			.toggleClass("ui-corner-right", value === this.options.max)
-			.width(percentage.toFixed(0) + "%");
-            this.element.attr("aria-valuenow", value);
         }
+
+
     });
 
     $.extend($.facetedsearch, {

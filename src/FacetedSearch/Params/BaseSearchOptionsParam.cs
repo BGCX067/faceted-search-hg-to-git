@@ -1,10 +1,10 @@
-﻿using System;
-using FacetedSearch.Common;
-using FacetedSearch.SD;
-using Lokad;
-
-namespace FacetedSearch.Params
+﻿namespace FacetedSearch.Params
 {
+    using System;
+    using Common;
+    using Lokad;
+    using SD;
+
     public abstract class BaseSearchOptionsParam : ISearchOptionsParam, IVisitorElement
     {
         private string _name;
@@ -19,9 +19,17 @@ namespace FacetedSearch.Params
 // ReSharper restore DoNotCallOverridableMethodsInConstructor
         }
 
-        protected BaseSearchOptionsParam(string name):this()
+        protected BaseSearchOptionsParam(string name) : this()
         {
             _name = name;
+        }
+
+        public string Type
+        {
+            get { return ParamType.ToString(); }
+// ReSharper disable ValueParameterNotUsed
+            set { }
+// ReSharper restore ValueParameterNotUsed
         }
 
         #region ISearchOptionsParam Members
