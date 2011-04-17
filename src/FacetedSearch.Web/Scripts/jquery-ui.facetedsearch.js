@@ -26,7 +26,10 @@
 (function ($, undefined) {
     $.fs = $.fs || {};
 
-    $.fs.manager = {
+    $.fs.manager = function () {
+    };
+
+    $.fs.manager.prototype = {
         options: {},
         init: function (options) {
             this.options = options;
