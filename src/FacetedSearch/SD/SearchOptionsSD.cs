@@ -10,7 +10,5 @@
         public string HtmlData { get; set; }
 
         public string HtmlContainerName { get; set; }
-
-        public string Url { get; set; }
     }
 }

@@ -25,7 +25,7 @@
 
         public static MvcHtmlString FacetedSearchJsInit<TModel>(this HtmlHelper<TModel> htmlHelper, string elementSelector, SearchOptions searchOptions)
         {
-            return searchOptions == null ? MvcHtmlString.Empty : MvcHtmlString.Create(string.Format("$(\"{0}\").facetedsearch({1});", elementSelector, searchOptions.GetJson()));
+            return searchOptions == null ? MvcHtmlString.Empty : MvcHtmlString.Create(string.Format("$(\"{0}\").facetedsearch({{url:\"{1}\", searchOptions:{2}}});", elementSelector, "http://localhost:1134/Home/Search", searchOptions.GetJson()));
         }
 
         public static MvcHtmlString FacetedSearchForCheckbox<TModel>(this HtmlHelper<TModel> htmlHelper,

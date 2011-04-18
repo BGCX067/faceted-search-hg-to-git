@@ -44,7 +44,8 @@
     };
 
     $.fs.manager.prototype = {
-        options: {},
+        options: null,
+        searchOptions: null,
         _onUpdate: function (e, updatedItem) {
             if (!this.options.deferredUpdate) {
                 this.query();
@@ -53,7 +54,7 @@
         query: function () {
             $.ajax({
                 type: "POST",
-                url: this.options.Url,
+                url: this.options.url,
                 data: this._getData(),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8"
@@ -63,15 +64,14 @@
             });
         },
         _getData: function () {
-            return $.fn.stringify({
-                Items: this.options.Items 
-             });
+            return $.fn.stringify(this.searchOptions);
         },
         init: function (options) {
             this.options = options;
+            this.searchOptions = options.searchOptions;
             var uiParams = this.element.find(".fs-param");
             var manager = this;
-            $.each(this.options.Items, function (ind, item) {
+            $.each(this.searchOptions.Items, function (ind, item) {
                 uiParams.filter("#" + item.Name).each(function (index, container) {
                     $.fs.params[item.Type]
                         .init($(container), item, manager)
@@ -117,9 +117,7 @@
 
     $.widget("ui.facetedsearch", {
         options: {
-            HtmlContainerName: null,
-            HtmlData: null,
-            Items: [],
+            searchOptions: null,
             createUI: false,
             deferredUpdate: false,
             url: "",    //current page

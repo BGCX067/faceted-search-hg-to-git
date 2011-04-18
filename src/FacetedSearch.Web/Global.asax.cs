@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace FacetedSearch.Web
 {
+    using System.Web.Mvc;
+    using Params;
+    using SD;
+
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
@@ -35,6 +38,12 @@ namespace FacetedSearch.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            var valueFactories = new ValueProviderFactory[ValueProviderFactories.Factories.Count];
+            ValueProviderFactories.Factories.CopyTo(valueFactories, 0);
+            ValueProviderFactories.Factories.Clear();
+
+            ValueProviderFactories.Factories.Add(new DataContractValueProviderFactory(typeof(SearchOptionsSD), new[] {typeof(TextSearchOptionsParam)}));
         }
     }
 }

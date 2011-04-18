@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using FacetedSearch.Common;
-using FacetedSearch.Params;
-using FacetedSearch.SD;
-
-namespace FacetedSearch
+﻿namespace FacetedSearch
 {
-    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using Common;
+    using Params;
+    using SD;
 
     public class SearchOptions : ISearchOptions, IVisitorElement
     {
@@ -21,7 +19,6 @@ namespace FacetedSearch
 
         public string HtmlData { get; set; }
         public string HtmlContainerName { get; set; }
-        public Uri Url { get; set; }
 
         #region ISearchOptions Members
 
@@ -32,7 +29,6 @@ namespace FacetedSearch
                                           Items = _params.Values.Select(_ => _.GetSD()).ToList(),
                                           HtmlData = HtmlData,
                                           HtmlContainerName = HtmlContainerName,
-                                          Url = Url.ToString(),
                                       };
 
 
