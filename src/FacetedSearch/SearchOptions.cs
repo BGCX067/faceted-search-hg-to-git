@@ -7,6 +7,8 @@ using FacetedSearch.SD;
 
 namespace FacetedSearch
 {
+    using System;
+
     public class SearchOptions : ISearchOptions, IVisitorElement
     {
         private readonly IJsonSerializer _jsonSerializer;
@@ -19,6 +21,7 @@ namespace FacetedSearch
 
         public string HtmlData { get; set; }
         public string HtmlContainerName { get; set; }
+        public Uri Url { get; set; }
 
         #region ISearchOptions Members
 
@@ -29,6 +32,7 @@ namespace FacetedSearch
                                           Items = _params.Values.Select(_ => _.GetSD()).ToList(),
                                           HtmlData = HtmlData,
                                           HtmlContainerName = HtmlContainerName,
+                                          Url = Url.ToString(),
                                       };
 
 

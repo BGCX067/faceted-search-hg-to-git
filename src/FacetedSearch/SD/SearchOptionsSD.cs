@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace FacetedSearch.SD
+﻿namespace FacetedSearch.SD
 {
+    using System.Collections.Generic;
+
     public class SearchOptionsSD : ISD
     {
         //List type was used to be compatible with deserialization process of DataContractSerializer
@@ -10,5 +10,7 @@ namespace FacetedSearch.SD
         public string HtmlData { get; set; }
 
         public string HtmlContainerName { get; set; }
+
+        public string Url { get; set; }
     }
 }

@@ -57,5 +57,11 @@
             //perform additional manipultation
             return _searchOptions;
         }
+
+        public SearchOptionsBuilder<TModel> Url(Uri url)
+        {
+            _searchOptions.Url = url;
+            return this;
+        }
     }
 }

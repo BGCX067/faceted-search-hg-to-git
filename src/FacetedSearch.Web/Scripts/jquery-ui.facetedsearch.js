@@ -1,5 +1,6 @@
-/// <reference path="jquery-1.4.4.js" />
-/// <reference path="jquery-ui.js" />
+/// <reference path="jquery-1.5.1.js" />
+/// <reference path="jquery-ui-1.8.11.js" />
+/// <reference path="goog/jquery-ui-1.8.11.js" />
 
 /*!
 * New BSD license
@@ -24,36 +25,89 @@
 /*global document: false, jQuery: false */
 
 (function ($, undefined) {
+
+    $.fn.stringify = function (obj) {
+        if (!window['JSON']) {
+            window['JSON'] = {};
+            goog.require('goog.json');
+        }
+        if (typeof window['JSON']['stringify'] !== 'function') {
+            window['JSON']['stringify'] = goog.json.serialize;
+        }
+        return window.JSON.stringify(obj, "");
+    }
+
     $.fs = $.fs || {};
 
-    $.fs.manager = function () {
+    $.fs.manager = function (element) {
+        this.element = element;
     };
 
     $.fs.manager.prototype = {
         options: {},
+        _onUpdate: function (e, updatedItem) {
+            if (!this.options.deferredUpdate) {
+                this.query();
+            }
+        },
+        query: function () {
+            $.ajax({
+                type: "POST",
+                url: this.options.Url,
+                data: this._getData(),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8"
+            })
+            .success(function (options, textStatus, jqXHR) {
+                i = 1;
+            });
+        },
+        _getData: function () {
+            return $.fn.stringify({
+                Items: this.options.Items 
+             });
+        },
         init: function (options) {
             this.options = options;
-            for (item in this.options.Items) {
-                $.fs.params
-            }
+            var uiParams = this.element.find(".fs-param");
+            var manager = this;
+            $.each(this.options.Items, function (ind, item) {
+                uiParams.filter("#" + item.Name).each(function (index, container) {
+                    $.fs.params[item.Type]
+                        .init($(container), item, manager)
+                        .bind("stateUpdated", $.proxy(manager._onUpdate, manager));
+                });
+            });
         }
     };
 
     $.fs.paramBase = {
         type: "",
-        init: function (container, item) {
+        _init: function (container, item, manager) {
+            this.container = container;
+            this.item = item;
+            this.manager = manager;
+        },
+        init: function (container, item, manager) {
         },
         update: function () {
         },
-        manager: $.fs.manager
+        manager: null,
+        container: null,
+        item: null
     };
 
     $.fs.params = {
-        text: $.extend(true, {}, $.fs.paramBase, {
-            init: function (container, item) {
+        text: $.extend(true, $({}), $.fs.paramBase, {
+            init: function (container, item, manager) {
+                this._init(container, item, manager);
+                that = this;
                 container.bind("focusout", function () {
                     var text = $(this).val();
+                    that.item.Text = text;
+                    that.trigger("stateUpdated", that.item);
                 });
+                return this;
             }
         }),
         checkbox: $.extend(true, {
@@ -67,6 +121,8 @@
             HtmlData: null,
             Items: [],
             createUI: false,
+            deferredUpdate: false,
+            url: "",    //current page
             value: 0,
             max: 100
         },
@@ -75,6 +131,7 @@
         },
 
         min: 0,
+        manager: null,
 
         _create: function () {
             if (this.options.createUI) {
@@ -82,9 +139,8 @@
 			        .appendTo(this.element);
             }
 
-            var uiParams = this.element.find(".fs-param");
-
-            this.oldValue = this._value();
+            this.manager = new $.fs.manager(this.element);
+            this.manager.init(this.options);
         },
 
         destroy: function () {

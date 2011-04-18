@@ -26,7 +26,7 @@
 
         public string Type
         {
-            get { return ParamType.ToString(); }
+            get { return ParamType.ToString().ToLower(); }
 // ReSharper disable ValueParameterNotUsed
             set { }
 // ReSharper restore ValueParameterNotUsed
