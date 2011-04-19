@@ -6,6 +6,8 @@
     using System.Web.Routing;
     using Builder;
     using Models;
+    using Params;
+    using SD;
 
     public class HomeController : Controller
     {
@@ -40,16 +42,24 @@
         public SearchOptions GetSearchOptions()
         {
             return
-                FluentSearchOptions.Configure<HomeController>().Text("Name").MapQuery(
+                FluentSearchOptions.Configure<HomeController>().Text("Name").Text("some text").MapQuery(
                     x => x.ViewBag).End()
                     .BuildSearchOptions();
         }
 
         [HttpPost]
-        public ActionResult Search(string values)
+        public ActionResult Search(SearchOptionsSD json)
         {
+            /*var reader = new StreamReader(ControllerContext.HttpContext.Request.InputStream);
+            string json1 = reader.ReadToEnd();
+
+            IJsonSerializer serializer = new DefaultJsonSerializer();
+
+            var searchOptionsSD = serializer.Deserialize<SearchOptionsSD>(json1);
+*/
             var urlHelper = GetUrlHelper();
             var searchOptions = GetSearchOptions();
+            ((TextSearchOptionsParam) searchOptions.GetParams()[0]).Text = "new text";
 
             return Content(searchOptions.GetJson());
         }

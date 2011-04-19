@@ -5,27 +5,33 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Runtime.Serialization.Json;
     using System.Web.Mvc;
-    using System.Xml;
+    using SD;
 
     public class DataContractValueProviderFactory : ValueProviderFactory
     {
+        private readonly IJsonSerializer _jsonSerializer;
+
         public DataContractValueProviderFactory()
         {
+            JsonParamName = "json";
         }
 
-        public DataContractValueProviderFactory(Type type, IEnumerable<Type> knownTypes) : this()
+        public DataContractValueProviderFactory(IJsonSerializer jsonSerializer) : this()
         {
-            Type = type;
-            KnownTypes = knownTypes;
+            _jsonSerializer = jsonSerializer;
         }
 
-        protected static IEnumerable<Type> KnownTypes { get; set; }
+        public IJsonSerializer JsonSerializer
+        {
+            get { return _jsonSerializer ?? new DefaultJsonSerializer(); }
+        }
 
-        protected static Type Type { get; set; }
+        public string JsonParamName { get; set; }
 
-        private static void AddToBackingStore(Dictionary<string, object> backingStore, string prefix, object value)
+        public Type DeserializationType { get; set; }
+
+        private void AddToBackingStore(IDictionary<string, object> backingStore, string prefix, object value)
         {
             var d = value as IDictionary<string, object>;
             if (d != null)
@@ -37,24 +43,23 @@
                 return;
             }
 
-            var l = value as IList;
-            if (l != null)
+            var list = value as IList;
+            if (list != null)
             {
-                for (int i = 0; i < l.Count; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    AddToBackingStore(backingStore, MakeArrayKey(prefix, i), l[i]);
+                    AddToBackingStore(backingStore, MakeArrayKey(prefix, i), list[i]);
                 }
                 return;
             }
 
             // primitive
-            backingStore[prefix] = value;
+            backingStore[JsonParamName] = value;
         }
 
-        private static object GetDeserializedObject(ControllerContext controllerContext)
+        private object GetDeserializedObject(ControllerContext controllerContext)
         {
-            if (
-                !controllerContext.HttpContext.Request.ContentType.StartsWith("application/json",
+            if (!controllerContext.HttpContext.Request.ContentType.StartsWith("application/json",
                                                                               StringComparison.OrdinalIgnoreCase))
             {
                 // not JSON request
@@ -62,28 +67,24 @@
             }
 
             var reader = new StreamReader(controllerContext.HttpContext.Request.InputStream);
-            string bodyText = reader.ReadToEnd();
-            if (String.IsNullOrEmpty(bodyText))
+            string json = reader.ReadToEnd();
+            if (String.IsNullOrEmpty(json))
             {
                 // no JSON data
                 return null;
             }
 
-            object jsonData;
-            using (var xmlReader = new XmlTextReader(new StringReader(bodyText)))
+            object obj;
+
+            try
             {
-                try
-                {
-                    var serializer = new DataContractJsonSerializer(Type, KnownTypes);
-                    jsonData = serializer.ReadObject(xmlReader);
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-                
+                obj = JsonSerializer.Deserialize(json, DeserializationType ?? typeof (SearchOptionsSD));
             }
-            return jsonData;
+            catch (Exception)
+            {
+                return null;
+            }
+            return obj;
         }
 
         public override IValueProvider GetValueProvider(ControllerContext controllerContext)

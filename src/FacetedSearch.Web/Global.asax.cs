@@ -43,7 +43,7 @@ namespace FacetedSearch.Web
             ValueProviderFactories.Factories.CopyTo(valueFactories, 0);
             ValueProviderFactories.Factories.Clear();
 
-            ValueProviderFactories.Factories.Add(new DataContractValueProviderFactory(typeof(SearchOptionsSD), new[] {typeof(TextSearchOptionsParam)}));
+            ValueProviderFactories.Factories.Add(new DataContractValueProviderFactory());
         }
     }
 }

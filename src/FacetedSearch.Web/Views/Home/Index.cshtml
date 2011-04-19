@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 $(function() {
-    @Html.FacetedSearchJsInit("#container", Model.SearchOptions)
+    @(Html.FacetedSearchJsInit("#container", Model.SearchOptions, new {url = Url.Action("Search")}))
 });
 </script>
 

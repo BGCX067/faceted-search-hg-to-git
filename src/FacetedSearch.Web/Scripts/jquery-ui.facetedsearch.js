@@ -1,6 +1,7 @@
 /// <reference path="jquery-1.5.1.js" />
 /// <reference path="jquery-ui-1.8.11.js" />
-/// <reference path="goog/jquery-ui-1.8.11.js" />
+/// <reference path="goog/base.js" />
+/// <reference path="goog/json/json.js" />
 
 /*!
 * New BSD license
@@ -25,11 +26,20 @@
 /*global document: false, jQuery: false */
 
 (function ($, undefined) {
-
-    $.fn.stringify = function (obj) {
+    $.fn.stringify = function (obj, basePath) {
         if (!window['JSON']) {
             window['JSON'] = {};
-            goog.require('goog.json');
+            var jsFilename = "jquery-ui.facetedsearch.js";
+            basePath = basePath || $('script[src*="' + jsFilename + '"]')
+                .map(function () {
+                    var src = $(this).attr("src");
+                    return src.substring(0, src.indexOf(jsFilename));
+                }).get(0);
+
+            if (typeof goog == "undefined") {
+                $.getScript(basePath + "goog/base.js");
+                goog.require('goog.json');
+            }
         }
         if (typeof window['JSON']['stringify'] !== 'function') {
             window['JSON']['stringify'] = goog.json.serialize;
@@ -45,37 +55,59 @@
 
     $.fs.manager.prototype = {
         options: null,
-        searchOptions: null,
         _onUpdate: function (e, updatedItem) {
+            var that = this;
+            $.each(this.options.searchOptions.Items, function (ind, opt) {
+                if (opt.Name == updatedItem.Name) {
+                    that.options.searchOptions.Items[ind] = updatedItem;
+                    return false;
+                }
+            });
             if (!this.options.deferredUpdate) {
                 this.query();
             }
         },
         query: function () {
+            var that = this;
             $.ajax({
                 type: "POST",
                 url: this.options.url,
                 data: this._getData(),
                 dataType: "json",
-                contentType: "application/json; charset=utf-8"
+                contentType: this.options.contentType || "application/json; charset=utf-8"
             })
-            .success(function (options, textStatus, jqXHR) {
-                i = 1;
+            .success(function (searchOptions, textStatus, jqXHR) {
+                $.proxy(that.update, that)(searchOptions);
             });
         },
         _getData: function () {
-            return $.fn.stringify(this.searchOptions);
+            var htmlData = this.options.searchOptions.HtmlData;
+            // PREVENT FROM being send to the server a huge amount of html data
+            this.options.searchOptions.HtmlData = null;
+            var json = $.fn.stringify(this.options.searchOptions);
+            //restore html data
+            this.options.searchOptions.HtmlData = htmlData;
+            return json;
         },
         init: function (options) {
             this.options = options;
-            this.searchOptions = options.searchOptions;
+            this.update(options.searchOptions);
             var uiParams = this.element.find(".fs-param");
             var manager = this;
-            $.each(this.searchOptions.Items, function (ind, item) {
+            $.each(this.options.searchOptions.Items, function (ind, item) {
                 uiParams.filter("#" + item.Name).each(function (index, container) {
                     $.fs.params[item.Type]
                         .init($(container), item, manager)
                         .bind("stateUpdated", $.proxy(manager._onUpdate, manager));
+                });
+            });
+        },
+        update: function (searchOptions) {
+            this.options.searchOptions = searchOptions;
+            var uiParams = this.element.find(".fs-param");
+            $.each(this.options.searchOptions.Items, function (ind, item) {
+                uiParams.filter("#" + item.Name).each(function (index, container) {
+                    $.fs.params[item.Type].update($(container), item);
                 });
             });
         }
@@ -90,7 +122,7 @@
         },
         init: function (container, item, manager) {
         },
-        update: function () {
+        update: function (container, item) {
         },
         manager: null,
         container: null,
@@ -108,6 +140,9 @@
                     that.trigger("stateUpdated", that.item);
                 });
                 return this;
+            },
+            update: function (container, item) {
+                container.val(item.Text);
             }
         }),
         checkbox: $.extend(true, {
@@ -122,7 +157,8 @@
             deferredUpdate: false,
             url: "",    //current page
             value: 0,
-            max: 100
+            max: 100,
+            contentType: null
         },
 
         _init: function () {

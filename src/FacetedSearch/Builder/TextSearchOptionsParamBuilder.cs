@@ -36,5 +36,11 @@
             _param.Watermark = watermark;
             return this;
         }
+
+        public TextSearchOptionsParamBuilder<TModel> Text(string text)
+        {
+            _param.Text = text;
+            return this;
+        }
     }
 }

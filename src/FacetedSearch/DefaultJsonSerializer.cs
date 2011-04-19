@@ -39,6 +39,21 @@ namespace FacetedSearch
             }
             return json;
         }
+        
+        public T Deserialize<T>(string json)
+        {
+            return (T)Deserialize(json, typeof(T));
+        }
+
+        public object Deserialize(string json, Type type)
+        {
+            var jsonSerializer = new DataContractJsonSerializer(type, KnowTypes);
+
+            using (var memoryStream = new MemoryStream(Encoding.Unicode.GetBytes(json)))
+            {
+                return jsonSerializer.ReadObject(memoryStream);
+            }
+        }
 
         #endregion
     }

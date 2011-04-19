@@ -125,6 +125,7 @@
     <Compile Include="SerializationTypesAttribute.cs" />
     <Compile Include="Web\DataContractValueProviderFactory.cs" />
     <Compile Include="Web\BlockRenderer.cs" />
+    <Compile Include="Web\FacetedOptions.cs" />
     <Compile Include="Web\FacetedSearchHtmlHelper.cs" />
     <Compile Include="Web\Html.cs" />
   </ItemGroup>

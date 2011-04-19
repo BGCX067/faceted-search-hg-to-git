@@ -23,19 +23,32 @@
                         .ToString());
         }
 
-        public static MvcHtmlString FacetedSearchJsInit<TModel>(this HtmlHelper<TModel> htmlHelper, string elementSelector, SearchOptions searchOptions)
+        public static MvcHtmlString FacetedSearchJsInit<TModel>(this HtmlHelper<TModel> htmlHelper,
+                                                                string elementSelector, SearchOptions searchOptions,
+                                                                object options = null)
         {
-            return searchOptions == null ? MvcHtmlString.Empty : MvcHtmlString.Create(string.Format("$(\"{0}\").facetedsearch({{url:\"{1}\", searchOptions:{2}}});", elementSelector, "http://localhost:1134/Home/Search", searchOptions.GetJson()));
+            if (searchOptions == null)
+            {
+                return MvcHtmlString.Empty;
+            }
+
+            var opt = options != null ? new FacetedOptions(options) : new FacetedOptions();
+
+            opt.searchOptions = searchOptions.GetJsonObject();
+            string json = searchOptions.JsonSerializer.Serialize(opt);
+
+            return MvcHtmlString.Create(
+                string.Format("$(\"{0}\").facetedsearch({1});", elementSelector, json));
         }
 
         public static MvcHtmlString FacetedSearchForCheckbox<TModel>(this HtmlHelper<TModel> htmlHelper,
-                                                           CheckboxSearchOptionsParam param)
+                                                                     CheckboxSearchOptionsParam param)
         {
             return MvcHtmlString.Create(Html.RenderCheckbox(param).Render());
         }
 
         public static MvcHtmlString FacetedSearchForTextbox<TModel>(this HtmlHelper<TModel> htmlHelper,
-                                                          TextSearchOptionsParam param)
+                                                                    TextSearchOptionsParam param)
         {
             return MvcHtmlString.Create(Html.RenderTextbox(param).Render());
         }

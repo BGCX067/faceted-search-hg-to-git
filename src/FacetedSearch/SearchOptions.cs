@@ -20,9 +20,25 @@
         public string HtmlData { get; set; }
         public string HtmlContainerName { get; set; }
 
+        public IJsonSerializer JsonSerializer
+        {
+            get { return _jsonSerializer; }
+        }
+
         #region ISearchOptions Members
 
         public string GetJson()
+        {
+            var searchOptionsSD = GetJsonObject();
+
+            var paramsPart = _jsonSerializer.Serialize(searchOptionsSD);
+
+            //add extra options to json, think about versioning
+
+            return paramsPart;
+        }
+        
+        public SearchOptionsSD GetJsonObject()
         {
             var searchOptionsSD = new SearchOptionsSD
                                       {
@@ -32,11 +48,7 @@
                                       };
 
 
-            var paramsPart = _jsonSerializer.Serialize(searchOptionsSD);
-
-            //add extra options to json, think about versioning
-
-            return paramsPart;
+            return searchOptionsSD;
         }
 
         #endregion
