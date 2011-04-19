@@ -66,25 +66,7 @@
                 return null;
             }
 
-            var reader = new StreamReader(controllerContext.HttpContext.Request.InputStream);
-            string json = reader.ReadToEnd();
-            if (String.IsNullOrEmpty(json))
-            {
-                // no JSON data
-                return null;
-            }
-
-            object obj;
-
-            try
-            {
-                obj = JsonSerializer.Deserialize(json, DeserializationType ?? typeof (SearchOptionsSD));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            return obj;
+            return FacatedSearch.DeserializeJsonStream(controllerContext.HttpContext.Request.InputStream, JsonSerializer, DeserializationType);
         }
 
         public override IValueProvider GetValueProvider(ControllerContext controllerContext)

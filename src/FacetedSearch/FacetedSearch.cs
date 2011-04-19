@@ -2,7 +2,9 @@ namespace FacetedSearch
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Mapping;
+    using SD;
 
     public class FacatedSearch
     {
@@ -16,7 +18,7 @@ namespace FacetedSearch
         public static FacatedSearchMapper<T> Map<T>() where T : new()
         {
             if (ActiveMappings.ContainsKey(typeof(T)))
-                throw new ArgumentException(string.Format("Type '{0}' already mapped", typeof(T)));
+                throw new ArgumentException(String.Format("Type '{0}' already mapped", typeof(T)));
 
             var mapper = new FacatedSearchMapper<T>();
             ActiveMappings.Add(typeof(T), mapper);
@@ -27,10 +29,32 @@ namespace FacetedSearch
         public static Func<T, bool> Expression<T>(Dictionary<string, object> userChoice)
         {
             if(!ActiveMappings.ContainsKey(typeof(T)))
-                throw new ArgumentException(string.Format("Type '{0}' is not mapped", typeof(T)));
+                throw new ArgumentException(String.Format("Type '{0}' is not mapped", typeof(T)));
 
             var facatedMapper = (FacatedSearchMapper<T>)ActiveMappings[typeof(T)];
             return facatedMapper.Execute(userChoice);
+        }
+
+        public static object DeserializeJsonStream(Stream stream, IJsonSerializer jsonSerializer, Type deserializationType = null)
+        {
+            var reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+            if (String.IsNullOrEmpty(json))
+            {
+                // no JSON data
+                return null;
+            }
+
+            object obj;
+            try
+            {
+                obj = jsonSerializer.Deserialize(json, deserializationType ?? typeof (SearchOptionsSD));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return obj;
         }
     }
 }

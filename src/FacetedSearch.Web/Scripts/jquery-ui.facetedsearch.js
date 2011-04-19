@@ -139,6 +139,7 @@
                     that.item.Text = text;
                     that.trigger("stateUpdated", that.item);
                 });
+                container.watermark(item.Watermark)
                 return this;
             },
             update: function (container, item) {
