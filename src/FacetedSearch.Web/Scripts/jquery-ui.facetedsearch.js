@@ -107,7 +107,8 @@
             var uiParams = this.element.find(".fs-param");
             $.each(this.options.searchOptions.Items, function (ind, item) {
                 uiParams.filter("#" + item.Name).each(function (index, container) {
-                    $.fs.params[item.Type].update($(container), item);
+                    var param = $.fs.params[item.Type];
+                    $.proxy(param.update, param)($(container), item);
                 });
             });
         }
@@ -115,35 +116,55 @@
 
     $.fs.paramBase = {
         type: "",
-        _init: function (container, item, manager) {
+        init: function (container, item, manager) {
             this.container = container;
             this.item = item;
             this.manager = manager;
+
+            return this._init(container, item, manager);
         },
-        init: function (container, item, manager) {
+        _init: function (container, item, manager) {
         },
         update: function (container, item) {
+            return this._update(container, item);
+        },
+        _update: function (container, item) {
         },
         manager: null,
         container: null,
-        item: null
+        item: null,
+        _getPreviousValue: function (element) {
+            return element.data("previousValue") ||
+                element.data("previousValue", {
+                    value: null
+                });
+        },
+        _setPreviousValue: function (element, val) {
+            return element.data("previousValue", {
+                value: val
+            });
+        }
     };
 
     $.fs.params = {
         text: $.extend(true, $({}), $.fs.paramBase, {
-            init: function (container, item, manager) {
-                this._init(container, item, manager);
+            _init: function (container, item, manager) {
                 that = this;
                 container.bind("focusout", function () {
                     var text = $(this).val();
-                    that.item.Text = text;
-                    that.trigger("stateUpdated", that.item);
+                    var oldText = that._getPreviousValue(container);
+                    if (oldText.value !== text) {
+                        that.item.Text = text;
+                        that._setPreviousValue(container, text);
+                        that.trigger("stateUpdated", that.item);
+                    }
                 });
                 container.watermark(item.Watermark)
                 return this;
             },
-            update: function (container, item) {
+            _update: function (container, item) {
                 container.val(item.Text);
+                this._setPreviousValue(container, item.Text);
             }
         }),
         checkbox: $.extend(true, {
