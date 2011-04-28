@@ -5,6 +5,8 @@ using Machine.Specifications;
 
 namespace FacetedSearch.Tests
 {
+    using Json;
+
     [Subject("Json serializer")]
     public class json_serializer_serialize_correct_object : JsonSerializerSpecs
     {
@@ -13,7 +15,7 @@ namespace FacetedSearch.Tests
         private Establish context = () =>
                                         {
                                             _jsonSerializer = new DefaultJsonSerializer();
-                                            _searchOptions = new SearchOptions(_jsonSerializer);
+                                            _searchOptions = new SearchOptions();
                                         };
 
         private Because of = () => { _jsonString = _jsonSerializer.Serialize(_searchOptions); };

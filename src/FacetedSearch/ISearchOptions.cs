@@ -2,6 +2,5 @@
 {
     public interface ISearchOptions
     {
-        string GetJson();
     }
 }

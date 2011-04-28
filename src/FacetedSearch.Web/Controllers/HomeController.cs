@@ -6,6 +6,7 @@
     using System.Web.Routing;
     using Builder;
     using Models;
+    using OutputFormatter;
     using Params;
     using SD;
 
@@ -39,7 +40,7 @@
             return new UrlHelper(ControllerContext.RequestContext);
         }
 
-        public SearchOptions GetSearchOptions()
+        public SearchOptions<Person> GetSearchOptions()
         {
             return
                 FluentSearchOptions.Configure<Person>()
@@ -51,11 +52,12 @@
         [HttpPost]
         public ActionResult Search(SearchOptionsSD json)
         {
-            var urlHelper = GetUrlHelper();
             var searchOptions = GetSearchOptions();
             ((TextSearchOptionsParam) searchOptions.GetParams()[0]).Text = "new text";
 
-            return Content(searchOptions.GetJson());
+            string resultJson = new JsonFormatter().GetJson(searchOptions, "result", "result");
+
+            return Content(resultJson);
         }
     }
 }

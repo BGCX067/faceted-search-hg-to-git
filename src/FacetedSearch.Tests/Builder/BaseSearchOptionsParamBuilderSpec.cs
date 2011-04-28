@@ -5,6 +5,8 @@ using Machine.Specifications;
 
 namespace FacetedSearch.Tests.Builder
 {
+    using Json;
+
     [Subject("BaseSearchOptionsParamBuilder common functionality")]
     public class base_search_options_params_builder_common_functionality : BaseSearchOptionsParamBuilderSpec
     {
@@ -89,10 +91,10 @@ namespace FacetedSearch.Tests.Builder
         {
             _testParam = new TestSearchOptionsParam();
             _jsonSerializer = new DefaultJsonSerializer();
-            _searchBiulder = new SearchOptionsBuilder<object>(_jsonSerializer);
+            _searchBiulder = new SearchOptionsBuilder<object>();
             _queryMapper = new FacatedSearchMapper<object>();
             _builder = new TestSearchOptionsParamBuilder(_testParam, _searchBiulder, _queryMapper);
-            _searchOptions = new SearchOptions(_jsonSerializer);
+            _searchOptions = new SearchOptions();
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace FacetedSearch
+﻿namespace FacetedSearch.Json
 {
     using System;
 

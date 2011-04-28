@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using FacetedSearch.Extensions;
-using FacetedSearch.SD;
-
-namespace FacetedSearch
+﻿namespace FacetedSearch.Json
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization.Json;
+    using System.Text;
+    using FacetedSearch.Extensions;
+    using FacetedSearch.SD;
+
     public class DefaultJsonSerializer : IJsonSerializer
     {
         private static readonly IEnumerable<Type> KnowTypes;

@@ -94,8 +94,8 @@
     <Compile Include="FacetedSearch.cs" />
     <Compile Include="Factory\ISearchOptionsParamBuilderFactory.cs" />
     <Compile Include="Factory\SearchOptionsQueryParamBuilderBuilderFactory.cs" />
-    <Compile Include="IJsonSerializer.cs" />
-    <Compile Include="DefaultJsonSerializer.cs" />
+    <Compile Include="Json\IJsonSerializer.cs" />
+    <Compile Include="Json\DefaultJsonSerializer.cs" />
     <Compile Include="Mapping\FacatedSearchMapper.cs" />
     <Compile Include="Mapping\PropertyMapper.cs" />
     <Compile Include="Mapping\PropertyMappingType.cs" />
@@ -103,6 +103,7 @@
     <Compile Include="Mapping\RangeValueMapper.cs" />
     <Compile Include="Mapping\MultipleValueMapper.cs" />
     <Compile Include="Mapping\SingleValueMapper.cs" />
+    <Compile Include="OutputFormatter\JsonFormatter.cs" />
     <Compile Include="Params\BaseSearchOptionsParam.cs" />
     <Compile Include="Common\SearchOptionsParamOrderArgs.cs" />
     <Compile Include="Params\CheckboxSearchOptionsParam.cs" />

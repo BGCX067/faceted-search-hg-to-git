@@ -74,7 +74,6 @@
     </Compile>
     <Compile Include="Builder\BaseSearchOptionsParamBuilderSpec.cs" />
     <Compile Include="Builder\TestSearchOptionsParamBuilder.cs" />
-    <Compile Include="DefaultJsonSerializerTest.cs" />
     <Compile Include="FacatedSearchTests.cs" />
     <Compile Include="Mapping\FacatedSearchMapperTests.cs" />
     <Compile Include="Params\TestSearchOptionsParam.cs" />

@@ -1,6 +1,7 @@
 ﻿namespace FacetedSearch.Extensions
 {
     using System;
+    using Json;
     using Newtonsoft.Json;
 
     public class JsonSerializer : IJsonSerializer

@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Text;
     using System.Web.Mvc;
+    using Json;
     using Params;
 
     public static class FacetedSearchHtmlHelper
@@ -34,8 +35,8 @@
 
             var opt = options != null ? new FacetedOptions(options) : new FacetedOptions();
 
-            opt.searchOptions = searchOptions.GetJsonObject();
-            string json = searchOptions.JsonSerializer.Serialize(opt);
+            opt.searchOptions = searchOptions.GetSDObject();
+            string json = new DefaultJsonSerializer().Serialize(opt);
 
             return MvcHtmlString.Create(
                 string.Format("$(\"{0}\").facetedsearch({1});", elementSelector, json));

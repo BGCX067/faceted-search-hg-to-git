@@ -10,14 +10,13 @@
     {
         private readonly FacatedSearchMapper<TModel> _queryMapper = new FacatedSearchMapper<TModel>();
 
-        private readonly SearchOptions _searchOptions;
+        private readonly SearchOptions<TModel> _searchOptions;
 
         protected ISearchOptionsParamBuilderFactory<TModel> _searchOptionsParamBuilderBuilderFactory;
 
-        public SearchOptionsBuilder(IJsonSerializer jsonSerializer = null)
+        public SearchOptionsBuilder()
         {
-            jsonSerializer = jsonSerializer ?? new DefaultJsonSerializer();
-            _searchOptions = new SearchOptions(jsonSerializer);
+            _searchOptions = new SearchOptions<TModel> {QueryMapper = _queryMapper};
             _searchOptionsParamBuilderBuilderFactory =
                 new SearchOptionsQueryParamBuilderBuilderFactory<TModel>(_queryMapper);
         }
@@ -52,7 +51,7 @@
             return this;
         }
 
-        public SearchOptions BuildSearchOptions()
+        public SearchOptions<TModel> BuildSearchOptions()
         {
             //perform additional manipultation
             return _searchOptions;

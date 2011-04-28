@@ -3,6 +3,7 @@ namespace FacetedSearch
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using Json;
     using Mapping;
     using SD;
 
@@ -55,6 +56,11 @@ namespace FacetedSearch
                 return null;
             }
             return obj;
+        }
+        
+        public static object DeserializeJsonStream<T>(Stream stream, IJsonSerializer jsonSerializer)
+        {
+            return DeserializeJsonStream(stream, jsonSerializer, typeof (T));
         }
     }
 }

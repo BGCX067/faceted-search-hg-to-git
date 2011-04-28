@@ -4,54 +4,18 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using Common;
+    using Mapping;
     using Params;
     using SD;
 
+    public class SearchOptions<TModel> : SearchOptions
+    {
+        public FacatedSearchMapper<TModel> QueryMapper { get; set; }
+    }
+
     public class SearchOptions : ISearchOptions, IVisitorElement
     {
-        private readonly IJsonSerializer _jsonSerializer;
         private readonly IDictionary<int, ISearchOptionsParam> _params = new SortedList<int, ISearchOptionsParam>();
-
-        public SearchOptions(IJsonSerializer jsonSerializer)
-        {
-            _jsonSerializer = jsonSerializer;
-        }
-
-        public string HtmlData { get; set; }
-        public string HtmlContainerName { get; set; }
-
-        public IJsonSerializer JsonSerializer
-        {
-            get { return _jsonSerializer; }
-        }
-
-        #region ISearchOptions Members
-
-        public string GetJson()
-        {
-            var searchOptionsSD = GetJsonObject();
-
-            var paramsPart = _jsonSerializer.Serialize(searchOptionsSD);
-
-            //add extra options to json, think about versioning
-
-            return paramsPart;
-        }
-        
-        public SearchOptionsSD GetJsonObject()
-        {
-            var searchOptionsSD = new SearchOptionsSD
-                                      {
-                                          Items = _params.Values.Select(_ => _.GetSD()).ToList(),
-                                          HtmlData = HtmlData,
-                                          HtmlContainerName = HtmlContainerName,
-                                      };
-
-
-            return searchOptionsSD;
-        }
-
-        #endregion
 
         #region IVisitorElement Members
 
@@ -61,6 +25,17 @@
         }
 
         #endregion
+
+        public SearchOptionsSD GetSDObject()
+        {
+            var searchOptionsSD = new SearchOptionsSD
+                                      {
+                                          Items = _params.Values.Select(_ => _.GetSD()).ToList(),
+                                      };
+
+
+            return searchOptionsSD;
+        }
 
         public ReadOnlyCollection<ISearchOptionsParam> GetParams()
         {
