@@ -1,5 +1,6 @@
 /// <reference path="jquery-1.5.1.js" />
 /// <reference path="jquery-ui-1.8.11.js" />
+/// <reference path="jquery.watermark.js" />
 /// <reference path="goog/base.js" />
 /// <reference path="goog/json/json.js" />
 
@@ -78,6 +79,8 @@
             })
             .success(function (searchOptions, textStatus, jqXHR) {
                 $.proxy(that.update, that)(searchOptions);
+            })
+            .complete(function (jqXHR, textStatus) { 
             });
         },
         _getData: function () {
@@ -168,7 +171,10 @@
             }
         }),
         checkbox: $.extend(true, {
-        }, $.fs.paramBase)
+        }, $.fs.paramBase),
+        addParam: function (name, param) {
+            this[name] = param;
+        }
     };
 
 

@@ -2,9 +2,11 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Builder;
+    using Factory;
     using Models;
     using OutputFormatter;
     using Params;
@@ -53,6 +55,10 @@
         public ActionResult Search(SearchOptionsSD json)
         {
             var searchOptions = GetSearchOptions();
+            var jsonSearchOptionsFactory = new JsonSearchOptionsFactory();
+            var options = jsonSearchOptionsFactory.GetSearchOptions(searchOptions, json);
+
+            new PersonRepository().GetAll().Where(options.QueryMapper.Execute(null));
             ((TextSearchOptionsParam) searchOptions.GetParams()[0]).Text = "new text";
 
             string resultJson = new JsonFormatter().GetJson(searchOptions, "result", "result");

@@ -89,10 +89,11 @@
     <Compile Include="Common\IParamVisitorType.cs" />
     <Compile Include="Common\IVisitor.cs" />
     <Compile Include="Common\IVisitorElement.cs" />
-    <Compile Include="Common\Visitor.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="FacetedSearch.cs" />
+    <Compile Include="Factory\JsonSearchOptionsFactory.cs" />
     <Compile Include="Factory\ISearchOptionsParamBuilderFactory.cs" />
+    <Compile Include="Factory\SearchOptionsFactory.cs" />
     <Compile Include="Factory\SearchOptionsQueryParamBuilderBuilderFactory.cs" />
     <Compile Include="Json\IJsonSerializer.cs" />
     <Compile Include="Json\DefaultJsonSerializer.cs" />
