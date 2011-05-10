@@ -1,41 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using FacetedSearch.Common;
-using FacetedSearch.Params;
-using Lokad;
-
-namespace FacetedSearch.QueryBuilder
+﻿namespace FacetedSearch.QueryBuilder
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using Common;
+    using Lokad;
+    using Params;
+
     public class DictionaryQueryVisitor : IVisitor, IBuilder<IDictionary<string, object>>
     {
+        protected static readonly IDictionary<SearchOptionsParamType, IVisitor> InternalMap =
+            new Dictionary<SearchOptionsParamType, IVisitor>();
+
         private readonly IDictionary<string, object> _values = new Dictionary<string, object>();
 
         private readonly Func<ISearchOptionsParam, Pair<bool, object>> _visitorMapper =
             _ => new Pair<bool, object>(false, null);
 
-        protected static readonly IDictionary<SearchOptionsParamType, IVisitor> InternalMap = new Dictionary<SearchOptionsParamType, IVisitor>();
-
         static DictionaryQueryVisitor()
         {
             //automatically register all intermal supported types
             Assembly.GetAssembly(typeof (IParamVisitor<>)).GetExportedTypes().Where(
-                _ => _.GetInterfaces().Any(x => x == typeof(IParamVisitor<>))).ForEach(delegate(Type type)
-                                                                                        {
-                                                                                            var visitor = (IParamVisitorType)Activator.CreateInstance(type);
-                                                                                            InternalMap.Add(visitor.Type, (IVisitor) visitor);
-                                                                                        });
-
+                _ => _.GetInterfaces().Any(x => x == typeof (IParamVisitor<>))).ForEach(delegate(Type type)
+                                                                                            {
+                                                                                                var visitor =
+                                                                                                    (IParamVisitorType)
+                                                                                                    Activator.
+                                                                                                        CreateInstance(
+                                                                                                            type);
+                                                                                                InternalMap.Add(
+                                                                                                    visitor.Type,
+                                                                                                    (IVisitor) visitor);
+                                                                                            });
         }
 
         public DictionaryQueryVisitor()
         {
         }
 
-        public DictionaryQueryVisitor(Func<ISearchOptionsParam, Pair<bool, object>> visitorMapper)
+        public DictionaryQueryVisitor(Func<ISearchOptionsParam, Pair<bool, object>> visitorMapper) : this()
         {
-            _visitorMapper = visitorMapper;
+            if (visitorMapper != null)
+            {
+                _visitorMapper = visitorMapper;
+            }
         }
 
         #region IBuilder<IDictionary<string,object>> Members

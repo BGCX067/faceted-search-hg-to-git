@@ -1,6 +1,7 @@
 ﻿namespace FacetedSearch.Builder
 {
     using System;
+    using System.Linq.Expressions;
     using Factory;
     using Lokad;
     using Mapping;
@@ -35,20 +36,46 @@
             return _searchOptionsParamBuilderBuilderFactory.GetCheckboxParamBuilder(checkboxSearchOptionsParam, this);
         }
 
-        public SearchOptionsBuilder<TModel> Text(Action<TextSearchOptionsParamBuilder<TModel>> action)
+        public SearchOptionsBuilder<TModel> Text<TProperty>(Action<TextSearchOptionsParamBuilder<TModel>> action,
+                                                            Expression<Func<TModel, TProperty>> property)
         {
             Enforce.Argument(() => action);
 
-            action(Text());
+            var textBuilder = Text();
+            action(textBuilder);
+
+            if (property != null)
+            {
+                textBuilder.MapQuery(property);
+            }
+
+            return this;
+        }
+
+        public SearchOptionsBuilder<TModel> Text(Action<TextSearchOptionsParamBuilder<TModel>> action)
+        {
+            return Text<object>(action, null);
+        }
+
+        public SearchOptionsBuilder<TModel> Checkbox<TProperty>(
+            Action<CheckboxSearchOptionsParamBuilder<TModel>> action, Expression<Func<TModel, TProperty>> property)
+        {
+            Enforce.Argument(() => action);
+
+            var checkboxBuilder = Checkbox();
+            action(checkboxBuilder);
+
+            if (property != null)
+            {
+                checkboxBuilder.MapQuery(property);
+            }
+
             return this;
         }
 
         public SearchOptionsBuilder<TModel> Checkbox(Action<CheckboxSearchOptionsParamBuilder<TModel>> action)
         {
-            Enforce.Argument(() => action);
-
-            action(Checkbox());
-            return this;
+            return Checkbox<object>(action, null);
         }
 
         public SearchOptions<TModel> BuildSearchOptions()

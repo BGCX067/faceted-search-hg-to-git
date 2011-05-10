@@ -10,10 +10,13 @@
     using Models;
     using OutputFormatter;
     using Params;
+    using QueryBuilder;
     using SD;
 
     public class HomeController : Controller
     {
+        FacatedSearch<Person> _facetedSearch = new FacatedSearch<Person>(GetSearchOptions);
+
         //
         // GET: /Home/
         public ActionResult Index()
@@ -42,7 +45,7 @@
             return new UrlHelper(ControllerContext.RequestContext);
         }
 
-        public SearchOptions<Person> GetSearchOptions()
+        public static SearchOptions<Person> GetSearchOptions()
         {
             return
                 FluentSearchOptions.Configure<Person>()
@@ -54,14 +57,10 @@
         [HttpPost]
         public ActionResult Search(SearchOptionsSD json)
         {
-            var searchOptions = GetSearchOptions();
-            var jsonSearchOptionsFactory = new JsonSearchOptionsFactory();
-            var options = jsonSearchOptionsFactory.GetSearchOptions(searchOptions, json);
+            new PersonRepository().GetAll().Where(_facetedSearch.GetQueryExpression(json));
+            //((TextSearchOptionsParam) searchOptions.GetParams()[0]).Text = "new text";
 
-            new PersonRepository().GetAll().Where(options.QueryMapper.Execute(null));
-            ((TextSearchOptionsParam) searchOptions.GetParams()[0]).Text = "new text";
-
-            string resultJson = new JsonFormatter().GetJson(searchOptions, "result", "result");
+            string resultJson = new JsonFormatter().GetJson(GetSearchOptions(), "result", "result");
 
             return Content(resultJson);
         }

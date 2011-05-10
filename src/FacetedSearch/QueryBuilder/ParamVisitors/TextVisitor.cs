@@ -1,8 +1,8 @@
-﻿using FacetedSearch.Common;
-using FacetedSearch.Params;
-
-namespace FacetedSearch.QueryBuilder.ParamVisitors
+﻿namespace FacetedSearch.QueryBuilder.ParamVisitors
 {
+    using Common;
+    using Params;
+
     public class TextVisitor : IParamVisitor<TextSearchOptionsParam>
     {
         #region IParamVisitor<TextSearchOptionsParam> Members

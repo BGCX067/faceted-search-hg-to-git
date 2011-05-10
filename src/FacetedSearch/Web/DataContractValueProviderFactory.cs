@@ -67,7 +67,7 @@
                 return null;
             }
 
-            return FacatedSearch.DeserializeJsonStream(controllerContext.HttpContext.Request.InputStream, JsonSerializer, DeserializationType);
+            return DeserializeJsonStream(controllerContext.HttpContext.Request.InputStream, JsonSerializer, DeserializationType);
         }
 
         public override IValueProvider GetValueProvider(ControllerContext controllerContext)
@@ -96,6 +96,33 @@
         private static string MakePropertyKey(string prefix, string propertyName)
         {
             return (String.IsNullOrEmpty(prefix)) ? propertyName : prefix + "." + propertyName;
+        }
+
+        public static object DeserializeJsonStream(Stream stream, IJsonSerializer jsonSerializer, Type deserializationType = null)
+        {
+            var reader = new StreamReader(stream);
+            string json = reader.ReadToEnd();
+            if (String.IsNullOrEmpty(json))
+            {
+                // no JSON data
+                return null;
+            }
+
+            object obj;
+            try
+            {
+                obj = jsonSerializer.Deserialize(json, deserializationType ?? typeof(SearchOptionsSD));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return obj;
+        }
+
+        public static object DeserializeJsonStream<T>(Stream stream, IJsonSerializer jsonSerializer)
+        {
+            return DeserializeJsonStream(stream, jsonSerializer, typeof(T));
         }
     }
 }

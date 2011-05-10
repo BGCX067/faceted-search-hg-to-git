@@ -1,8 +1,8 @@
-﻿using FacetedSearch.Common;
-using FacetedSearch.Params;
-
-namespace FacetedSearch.QueryBuilder.ParamVisitors
+﻿namespace FacetedSearch.QueryBuilder.ParamVisitors
 {
+    using Common;
+    using Params;
+
     public class CheckboxVisitor : IParamVisitor<CheckboxSearchOptionsParam>
     {
         #region IParamVisitor<CheckboxSearchOptionsParam> Members

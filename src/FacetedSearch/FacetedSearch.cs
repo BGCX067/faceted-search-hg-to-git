@@ -2,14 +2,14 @@ namespace FacetedSearch
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using Json;
     using Mapping;
+    using QueryBuilder;
     using SD;
 
     public class FacatedSearch
     {
-        private static readonly Dictionary<Type, FacatedSearchMapper> ActiveMappings = new Dictionary<Type, FacatedSearchMapper>();
+        private static readonly Dictionary<Type, FacatedSearchMapper> ActiveMappings =
+            new Dictionary<Type, FacatedSearchMapper>();
 
         public static void Clear()
         {
@@ -18,49 +18,39 @@ namespace FacetedSearch
 
         public static FacatedSearchMapper<T> Map<T>() where T : new()
         {
-            if (ActiveMappings.ContainsKey(typeof(T)))
-                throw new ArgumentException(String.Format("Type '{0}' already mapped", typeof(T)));
+            if (ActiveMappings.ContainsKey(typeof (T)))
+                throw new ArgumentException(String.Format("Type '{0}' already mapped", typeof (T)));
 
             var mapper = new FacatedSearchMapper<T>();
-            ActiveMappings.Add(typeof(T), mapper);
+            ActiveMappings.Add(typeof (T), mapper);
 
             return mapper;
         }
 
         public static Func<T, bool> Expression<T>(Dictionary<string, object> userChoice)
         {
-            if(!ActiveMappings.ContainsKey(typeof(T)))
-                throw new ArgumentException(String.Format("Type '{0}' is not mapped", typeof(T)));
+            if (!ActiveMappings.ContainsKey(typeof (T)))
+                throw new ArgumentException(String.Format("Type '{0}' is not mapped", typeof (T)));
 
-            var facatedMapper = (FacatedSearchMapper<T>)ActiveMappings[typeof(T)];
+            var facatedMapper = (FacatedSearchMapper<T>) ActiveMappings[typeof (T)];
             return facatedMapper.Execute(userChoice);
         }
+    }
 
-        public static object DeserializeJsonStream(Stream stream, IJsonSerializer jsonSerializer, Type deserializationType = null)
+    public class FacatedSearch<TModel> : FacatedSearch
+    {
+        private readonly Func<SearchOptions<TModel>> _searchOptionsInitializer;
+
+        public FacatedSearch(Func<SearchOptions<TModel>> searchOptionsInitializer)
         {
-            var reader = new StreamReader(stream);
-            string json = reader.ReadToEnd();
-            if (String.IsNullOrEmpty(json))
-            {
-                // no JSON data
-                return null;
-            }
-
-            object obj;
-            try
-            {
-                obj = jsonSerializer.Deserialize(json, deserializationType ?? typeof (SearchOptionsSD));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            return obj;
+            _searchOptionsInitializer = searchOptionsInitializer;
         }
-        
-        public static object DeserializeJsonStream<T>(Stream stream, IJsonSerializer jsonSerializer)
+
+        public Func<TModel, bool> GetQueryExpression(SearchOptionsSD searchOptionsSD)
         {
-            return DeserializeJsonStream(stream, jsonSerializer, typeof (T));
+            var values = new ValueExtractor().GetValueDictionary(searchOptionsSD);
+            var searchOptions = _searchOptionsInitializer();
+            return searchOptions.QueryMapper.Execute(values);
         }
     }
 }

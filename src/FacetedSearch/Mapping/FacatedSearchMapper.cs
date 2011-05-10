@@ -2,7 +2,6 @@ namespace FacetedSearch.Mapping
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
 
     public class FacatedSearchMapper
@@ -11,15 +10,15 @@ namespace FacetedSearch.Mapping
 
     public class FacatedSearchMapper<T> : FacatedSearchMapper
     {
-        private static readonly Dictionary<PropertyMappingType, PropertyMapper> _mappers;
+        private static readonly Dictionary<PropertyMappingType, PropertyMapper> Mappers;
         private readonly Dictionary<string, PropertyMember> _propertyMappings;
 
         static FacatedSearchMapper()
         {
-            _mappers = new Dictionary<PropertyMappingType, PropertyMapper>();
-            _mappers[PropertyMappingType.SingleValue] = new SingleValueMapper();
-            _mappers[PropertyMappingType.RangeValue] = new RangeValueMapper();
-            _mappers[PropertyMappingType.MultipleValue] = new MultipleValueMapper();
+            Mappers = new Dictionary<PropertyMappingType, PropertyMapper>();
+            Mappers[PropertyMappingType.SingleValue] = new SingleValueMapper();
+            Mappers[PropertyMappingType.RangeValue] = new RangeValueMapper();
+            Mappers[PropertyMappingType.MultipleValue] = new MultipleValueMapper();
         }
 
         public FacatedSearchMapper()
@@ -58,7 +57,7 @@ namespace FacetedSearch.Mapping
             return Property(listProperty, referenceName, PropertyMappingType.MultipleValue);
         }
 
-        private PropertyMember GetPropertyInfo<TProperty>(Expression<Func<T, TProperty>> property)
+        private static PropertyMember GetPropertyInfo<TProperty>(Expression<Func<T, TProperty>> property)
         {
             if (!(property.Body is MemberExpression))
             {
@@ -68,7 +67,7 @@ namespace FacetedSearch.Mapping
             return new PropertyMember(property.Body as MemberExpression);
         }
 
-        public Func<T, bool> Execute(Dictionary<string, object> userChoice)
+        public Func<T, bool> Execute(IDictionary<string, object> userChoice)
         {
             Expression finalExpression = null;
 
@@ -80,7 +79,7 @@ namespace FacetedSearch.Mapping
 
                 PropertyMember propertyMember = propertyMapping.Value;
                 object userChoiceForParameter = userChoice[propertyMapping.Key];
-                PropertyMapper propertyMapper = _mappers[propertyMember.MappingType];
+                PropertyMapper propertyMapper = Mappers[propertyMember.MappingType];
 
                 BinaryExpression expression =
                     propertyMapper.GetCompareExpression(propertyMember.AccessExpression(parameter),

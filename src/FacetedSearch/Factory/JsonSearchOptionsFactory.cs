@@ -6,7 +6,7 @@
 
     public class JsonSearchOptionsFactory : SearchOptionsFactory
     {
-        public SearchOptions GetSearchOptions(SearchOptionsSD searchOptionsSD)
+        /*public SearchOptions GetSearchOptions(SearchOptionsSD searchOptionsSD)
         {
             if (searchOptionsSD == null)
             {
@@ -32,11 +32,6 @@
 
             var searchOptionsSD = sd as SearchOptionsSD;
             return GetSearchOptions(searchOptionsSD);
-        }
-
-        public SearchOptions<TModel> GetSearchOptions<TModel>(SearchOptions<TModel> searchOptionsModelMapping, SearchOptionsSD searchOptionsSD)
-        {
-            return ((SearchOptions<TModel>)AssignSearchOptionsData(searchOptionsModelMapping, searchOptionsSD));
-        }
+        }*/
     }
 }

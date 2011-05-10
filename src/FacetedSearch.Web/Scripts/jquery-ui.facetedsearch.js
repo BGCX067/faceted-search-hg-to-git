@@ -153,6 +153,9 @@
         text: $.extend(true, $({}), $.fs.paramBase, {
             _init: function (container, item, manager) {
                 that = this;
+                container.val(item.Text);
+                that._setPreviousValue(container, item.Text);
+
                 container.bind("focusout", function () {
                     var text = $(this).val();
                     var oldText = that._getPreviousValue(container);
@@ -166,8 +169,6 @@
                 return this;
             },
             _update: function (container, item) {
-                container.val(item.Text);
-                this._setPreviousValue(container, item.Text);
             }
         }),
         checkbox: $.extend(true, {
@@ -206,14 +207,7 @@
         },
 
         destroy: function () {
-            this.element
-			.removeClass("ui-progressbar ui-widget ui-widget-content ui-corner-all")
-			.removeAttr("role")
-			.removeAttr("aria-valuemin")
-			.removeAttr("aria-valuemax")
-			.removeAttr("aria-valuenow");
-
-            this.valueDiv.remove();
+            
 
             $.Widget.prototype.destroy.apply(this, arguments);
         },
@@ -246,12 +240,8 @@
                 val = 0;
             }
             return Math.min(this.options.max, Math.max(this.min, val));
-        },
-
-        _percentage: function () {
-            return 100 * this._value() / this.options.max;
         }
-
+        
 
     });
 

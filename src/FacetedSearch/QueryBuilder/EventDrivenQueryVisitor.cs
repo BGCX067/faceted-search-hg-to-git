@@ -1,9 +1,9 @@
-﻿using System;
-using FacetedSearch.Common;
-using FacetedSearch.Params;
-
-namespace FacetedSearch.QueryBuilder
+﻿namespace FacetedSearch.QueryBuilder
 {
+    using System;
+    using Common;
+    using Params;
+
     public class EventDrivenQueryVisitor : IVisitor
     {
         #region IVisitor Members

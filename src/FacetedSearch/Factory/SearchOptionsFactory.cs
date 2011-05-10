@@ -4,6 +4,6 @@
 
     public abstract class SearchOptionsFactory
     {
-        public abstract SearchOptions GetSearchOptions<T>(T sd) where T : ISD;
+        //public abstract SearchOptions GetSearchOptions<T>(T sd) where T : ISD;
     }
 }
